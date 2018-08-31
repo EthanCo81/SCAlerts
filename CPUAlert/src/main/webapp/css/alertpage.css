@@ -1,0 +1,69 @@
+﻿
+
+footer {
+    background: #5584ff;
+    position: fixed;
+    bottom: 0;
+    
+    width: 100%;
+    height: 15%;
+}
+
+#samsbar {
+    background: #0B0B3B;
+    width: 160px;
+    position: absolute;
+    height: 100%;
+}
+
+
+
+#logo {
+    width:128px;
+    height:128px;
+    position: center;
+    top:30px;
+}
+
+.modal-alert-title {
+    color: red;
+    text-align: center;
+}
+
+
+
+.modal-alert-body {
+    color: firebrick;
+    height: 400px;
+}
+
+.modal-backdrop{
+    background-color: firebrick;
+}
+
+    .modal-footer {
+        text-align: center;
+    }
+
+    .alert-text {
+        position: center;
+        text-align: center;
+    }
+
+.modal-ebu-body input {
+    border: 1px solid #d4d9e3;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 14px 10px;
+    width: 100%;
+    color: #8492af;
+}
+
+.modal-open .modal.modal-allow-overflow {
+    overflow: visible;
+}
+
+
+    #store-info {
+        text-align: right;
+    }
