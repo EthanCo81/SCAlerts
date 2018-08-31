@@ -1,9 +1,10 @@
 
-countryCode;
-ebuNbr;
+countryCode = null;
+ebuNbr = null;
 
 
 function getAlerts() {
+    console.log("called get alerts")
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = sendAlert;
     xhttp.open("GET", "alert/" + countryCode + "/" + ebuNbr, true);
@@ -11,11 +12,13 @@ function getAlerts() {
     function sendAlert() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             alert = JSON.parse(xhttp.responseText);
+            console.log(alert);
             if (alert.alertStatus === 1) {
                 $("#alert").modal({
                     backdrop: 'static',
                     keyboard: false
                 });
+                clearInterval();
             }
         }
     }
@@ -25,11 +28,13 @@ function sendAcknowledge() {
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", "acknowledge/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
+
+    setInterval(getAlerts, 10000);
 }
 
 function sendEbuInfo() {
     ebuNbr = document.getElementById("ebuNbr").value;
-    countryCode = document.getElementById("countryCode").hiddenvalue;
+    countryCode = document.getElementById("countryCode").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = isStore;
     xhttp.open("GET", "ebu/" + countryCode + "/" + ebuNbr, true);
@@ -38,13 +43,15 @@ function sendEbuInfo() {
     function isStore() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             if (xhttp.responseText === null) {
-                document.getElementById("null-div").innerText = "Invalid store code";
+                document.getElementById("null-div").innerHTML = "Invalid store code";
             } else {
                 ebu = JSON.parse(xhttp.responseText);
                 document.getElementById("store-info").innerText =
                     `${ebu.city}, ${ebu.state}
                      Store #${ebuNbr}`;
-                $("#modal_new_project").modal('hide');
+                $("#ebu-input").modal('hide');
+
+                setInterval(getAlerts(), 10000);
             }
         }
         
@@ -54,5 +61,4 @@ function sendEbuInfo() {
 window.onload = function () {
     document.getElementById("acknowledge-button").addEventListener("click", sendAcknowledge);
     document.getElementById("ebu-button").addEventListener("click", sendEbuInfo);
-    setInterval(getAlerts, 10000);
 };
