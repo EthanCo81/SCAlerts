@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
 
-@Component
 @Entity
 @Table(name="alert")
 public class Alert {
@@ -32,6 +30,20 @@ public class Alert {
        
        @Column(name="last_alert_ts_ltz")
        private Date lastAlertLtz;
+       
+	    public Alert() {
+	           super();
+	    }
+       
+	    public Alert(int ebuId, String countryCode, int alertType, int alertStatus, Date lastAlertGmt, Date lastAlertLtz) {
+	           super();
+	           this.ebuId = ebuId;
+	           this.countryCode = countryCode;
+	           this.alertType = alertType;
+	           this.alertStatus = alertStatus;
+	           this.lastAlertGmt = lastAlertGmt;
+	           this.lastAlertLtz = lastAlertLtz;
+	   }
 
        public int getEbuId() {
               return ebuId;
@@ -127,19 +139,11 @@ public class Alert {
               return true;
        }
 
-       public Alert(int ebuId, String countryCode, int alertType, int alertStatus, Date lastAlertGmt, Date lastAlertLtz) {
-              super();
-              this.ebuId = ebuId;
-              this.countryCode = countryCode;
-              this.alertType = alertType;
-              this.alertStatus = alertStatus;
-              this.lastAlertGmt = lastAlertGmt;
-              this.lastAlertLtz = lastAlertLtz;
-       }
-
-       public Alert() {
-              super();
-       }
+	@Override
+	public String toString() {
+		return "Alert [ebuId=" + ebuId + ", countryCode=" + countryCode + ", alertType=" + alertType + ", alertStatus="
+				+ alertStatus + ", lastAlertGmt=" + lastAlertGmt + ", lastAlertLtz=" + lastAlertLtz + "]";
+	}
 
 }
 

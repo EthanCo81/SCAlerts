@@ -1,17 +1,20 @@
 package com.example.demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.beans.Alert;
-import com.example.demo.data.AlertDAO;
+import com.example.demo.data.AlertRepository;
 
+@Service
 public class AlertServiceImpl  implements AlertService{
 
 	@Autowired 
-	private AlertDAO alertRepo;
+	private AlertRepository alertRepo;
 	
 	@Override
 	public Alert getAlert(int ebuNbr) {
-		return alertRepo.getOne(ebuNbr);
+		Alert a = alertRepo.findById(ebuNbr).get();
+		return a;
 	}
 }

@@ -1,10 +1,7 @@
 package com.example.demo.services;
 
-import org.springframework.stereotype.Service;
-
 import com.example.beans.Alert;
 
-@Service
 public interface AlertService {
 		
 	/*
