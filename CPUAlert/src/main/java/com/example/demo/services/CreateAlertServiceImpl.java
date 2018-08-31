@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.services;
 
 import javax.transaction.Transactional;
 
@@ -9,10 +9,10 @@ import com.example.beans.Alert;
 import com.example.demo.data.AlertRepository;
 
 @Service
-public class CreateAlertService {
+public class CreateAlertServiceImpl implements CreateAlertService{
 	
 	@Autowired
-	public CreateAlertService() {
+	public CreateAlertServiceImpl() {
 		super();
 	}
 	
@@ -20,11 +20,14 @@ public class CreateAlertService {
 	AlertRepository alertDao;
 	
 	@Transactional
+	@Override
 	public Alert createAlert(Alert alert) {
-		return alertDao.save(alert);
+		System.out.println(alert);
+		return alertDao.saveAndFlush(alert);
 	}
 	
 	@Transactional
+	@Override
 	public void updateAlert(Alert alert) {
 		alertDao.save(alert);
 	}

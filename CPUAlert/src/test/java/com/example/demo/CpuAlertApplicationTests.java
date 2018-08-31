@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.example.beans.Alert;
 import com.example.beans.EBUInfo;
 import com.example.beans.EBUid;
-import com.example.controllers.CreateAlertController;
+import com.example.demo.controllers.CreateAlertController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -47,7 +47,7 @@ public class CpuAlertApplicationTests {
 	public void testAlertIsSetCorrectly() {
 		CreateAlertController cac = new CreateAlertController();
 		//Alert to be changed
-		EBUid ebuID = new EBUid("US", 15);
+		EBUid ebuID = new EBUid("US", 4969);
 		EBUInfo ebuInfo = new EBUInfo();
 		ebuInfo.setCity("Chicago");
 		ebuInfo.setEbuId(ebuID);

@@ -1,4 +1,4 @@
-package com.example.controllers;
+package com.example.demo.controllers;
 
 import java.time.DateTimeException;
 import java.time.ZoneId;
@@ -21,15 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
 import com.example.beans.EBUInfo;
-import com.example.demo.CreateAlertService;
 import com.example.demo.services.AlertService;
+import com.example.demo.services.CreateAlertServiceImpl;
 import com.example.demo.services.EBUInfoService;
 
 @RestController
-@RequestMapping(value="/createalert")
 public class CreateAlertController {
 	@Autowired
-	CreateAlertService createAlertService;
+	CreateAlertServiceImpl createAlertServiceImpl;
 	
 	@Autowired
 	AlertService alertService;
@@ -37,7 +36,7 @@ public class CreateAlertController {
 	@Autowired
 	EBUInfoService ebuInfoService;
 	
-	@PostMapping(value= {"/{ebuNbr}/{countryCode}/{timeZone}", "/{ebuNbr}/{countryCode}"}, 
+	@PostMapping(value= {"createAlert/{ebuNbr}/{countryCode}/{timeZone}", "/{ebuNbr}/{countryCode}"}, 
 			consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Alert> createAlert(@Valid @RequestBody Alert alert, @PathVariable("ebuNbr")int ebuNbr,
 			@PathVariable("countryCode") String countryCode, @PathVariable("timeZone") Optional<String> timeZone){
@@ -50,13 +49,13 @@ public class CreateAlertController {
 				s_timeZone = timeZone.get();
 			}
 			Alert newAlert = setNewAlert(alert, s_timeZone, ebuInfo);
-			return new ResponseEntity<>(this.createAlertService.createAlert(newAlert), HttpStatus.CREATED);
+			return new ResponseEntity<>(this.createAlertServiceImpl.createAlert(newAlert), HttpStatus.CREATED);
 		} else {
-			return new ResponseEntity<>(this.createAlertService.createAlert(oldAlert), HttpStatus.CREATED);
+			return new ResponseEntity<>(this.createAlertServiceImpl.createAlert(oldAlert), HttpStatus.CREATED);
 		}
 	}	
 	
-	@PutMapping(value= {"/{ebuNbr}/{countryCode}/{timeZone}", "/{ebuNbr}/{countryCode}"}, 
+	@PutMapping(value= {"createAlert/{ebuNbr}/{countryCode}/{timeZone}", "/{ebuNbr}/{countryCode}"}, 
 			consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Alert> updateAlert(@Valid @RequestBody Alert alert, @PathVariable("ebuNbr")int ebuNbr,
 			@PathVariable("countryCode") String countryCode, @PathVariable("timeZone") Optional<String> timeZone){
@@ -69,7 +68,7 @@ public class CreateAlertController {
 				s_timeZone = timeZone.get();
 			}
 			Alert newAlert = setNewAlert(alert, s_timeZone, ebuInfo);
-			createAlertService.updateAlert(newAlert);
+			createAlertServiceImpl.updateAlert(newAlert);
 			return new ResponseEntity<>(alert, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(oldAlert, HttpStatus.OK);
@@ -80,8 +79,8 @@ public class CreateAlertController {
 		alert.setAlertStatus(1);
 		ZonedDateTime currentGmtTime = ZonedDateTime.now(ZoneId.of("GMT"));
 		alert.setLastAlertGmt(currentGmtTime);
-		ZoneId localTimeZone = validateTimeZone(timeZone, ebuInfo.getTimezone());
 		
+		ZoneId localTimeZone = validateTimeZone(timeZone, ebuInfo.getTimezone());
 		ZonedDateTime localTime = ZonedDateTime.of(currentGmtTime.toLocalDateTime(), localTimeZone);
 		alert.setLastAlertLtz(localTime);
 		
