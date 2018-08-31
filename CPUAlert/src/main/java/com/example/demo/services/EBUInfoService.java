@@ -4,6 +4,6 @@ import com.example.beans.EBUInfo;
 
 public interface EBUInfoService {
 	
-	public EBUInfo getInfo(int ebuNbr);
+	public EBUInfo getInfo(String countryCode,int ebuNbr);
 
 }

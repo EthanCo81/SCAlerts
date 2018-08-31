@@ -19,7 +19,7 @@ public class EBUController {
 	
 	@RequestMapping(value = "/ebu/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
 	public ResponseEntity<EBUInfo> getInfo(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
-		EBUInfo info = ebuService.getInfo(ebuNbr);
+		EBUInfo info = ebuService.getInfo(countryCode, ebuNbr);
 		return new ResponseEntity<> (info, HttpStatus.OK);
 	}
 

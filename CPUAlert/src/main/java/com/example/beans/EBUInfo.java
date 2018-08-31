@@ -1,20 +1,16 @@
 package com.example.beans;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ebu_info")
 public class EBUInfo {
-
-	@Id
-	@Column(name="ebu_nbr")
-	private int ebuNbr;
 	
-	@Column(name="country_code")
-	private String countryCode;
+	@EmbeddedId
+	private EBUid ebuId;
 	
 	@Column(name="ebu_city")
 	private String city;
@@ -28,30 +24,21 @@ public class EBUInfo {
 	public EBUInfo() {
 		super();
 	}
-	
-	public EBUInfo(int ebuNbr, String countryCode, String city, String state, String timezone) {
+
+	public EBUInfo(EBUid ebuId, String city, String state, String timezone) {
 		super();
-		this.ebuNbr = ebuNbr;
-		this.countryCode = countryCode;
+		this.ebuId = ebuId;
 		this.city = city;
 		this.state = state;
 		this.timezone = timezone;
 	}
 
-	public int getEbuNbr() {
-		return ebuNbr;
+	public EBUid getEbuId() {
+		return ebuId;
 	}
 
-	public void setEbuNbr(int ebuNbr) {
-		this.ebuNbr = ebuNbr;
-	}
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+	public void setEbuId(EBUid ebuId) {
+		this.ebuId = ebuId;
 	}
 
 	public String getCity() {
@@ -83,8 +70,7 @@ public class EBUInfo {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
-		result = prime * result + ebuNbr;
+		result = prime * result + ((ebuId == null) ? 0 : ebuId.hashCode());
 		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + ((timezone == null) ? 0 : timezone.hashCode());
 		return result;
@@ -104,12 +90,10 @@ public class EBUInfo {
 				return false;
 		} else if (!city.equals(other.city))
 			return false;
-		if (countryCode == null) {
-			if (other.countryCode != null)
+		if (ebuId == null) {
+			if (other.ebuId != null)
 				return false;
-		} else if (!countryCode.equals(other.countryCode))
-			return false;
-		if (ebuNbr != other.ebuNbr)
+		} else if (!ebuId.equals(other.ebuId))
 			return false;
 		if (state == null) {
 			if (other.state != null)
@@ -126,8 +110,9 @@ public class EBUInfo {
 
 	@Override
 	public String toString() {
-		return "EBUInfo [ebuNbr=" + ebuNbr + ", countryCode=" + countryCode + ", city=" + city + ", state=" + state
-				+ ", timezone=" + timezone + "]";
+		return "EBUInfo [ebuId=" + ebuId + ", city=" + city + ", state=" + state + ", timezone=" + timezone + "]";
 	}
+	
+
 	
 }

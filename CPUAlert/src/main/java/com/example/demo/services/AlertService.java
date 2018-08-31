@@ -10,5 +10,5 @@ public interface AlertService {
 	 * @param ebuNbr
 	 * @return Alert 
 	 */
-	public Alert getAlert(int ebuNbr);
+	public Alert getAlert(String countryCode, int ebuNbr);
 }

@@ -18,7 +18,7 @@ public class AlertController {
 	
 	@RequestMapping(value = "/alert/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
 	public ResponseEntity<Alert> getAlert(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
-		Alert a = alertService.getAlert(ebuNbr);
+		Alert a = alertService.getAlert(countryCode, ebuNbr);
 		return new ResponseEntity<> (a, HttpStatus.OK);
 	}
 }
