@@ -8,6 +8,9 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>java:com.alert.acknowledge.driver.AcknowledgeAlertServiceApplication</config>
+		<config>java:com.alert.acknowledge.beans.Alert</config>
+		<config>java:com.alert.acknowledge.beans.AlertHistory</config>
+		<config>java:com.alert.acknowledge.beans.AlertIdentity</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
