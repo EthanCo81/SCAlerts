@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.example.demo")
-@EntityScan("com.example.demo")
+@ComponentScan
+@EntityScan("com.example.beans")
 public class CpuAlertApplication {
 
 	public static void main(String[] args) {

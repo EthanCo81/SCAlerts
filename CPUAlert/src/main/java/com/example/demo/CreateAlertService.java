@@ -9,10 +9,10 @@ import com.example.beans.Alert;
 import com.example.daos.AlertDAO;
 
 @Service
-public class AlertService {
+public class CreateAlertService {
 	
 	@Autowired
-	public AlertService() {
+	public CreateAlertService() {
 		super();
 	}
 	
