@@ -1,6 +1,6 @@
 package com.example.beans;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,10 +28,10 @@ public class Alert {
        private int alertStatus;
 
        @Column(name="last_alert_ts_gmt")
-       private Date lastAlertGmt;
+       private ZonedDateTime lastAlertGmt;
        
        @Column(name="last_alert_ts_ltz")
-       private Date lastAlertLtz;
+       private ZonedDateTime lastAlertLtz;
 
        public int getEbuId() {
               return ebuId;
@@ -65,19 +65,19 @@ public class Alert {
               this.alertStatus = alertStatus;
        }
 
-       public Date getLastAlertGmt() {
+       public ZonedDateTime getLastAlertGmt() {
               return lastAlertGmt;
        }
 
-       public void setLastAlertGmt(Date lastAlertGmt) {
-              this.lastAlertGmt = lastAlertGmt;
+       public void setLastAlertGmt(ZonedDateTime currentGmtTime) {
+              this.lastAlertGmt = currentGmtTime;
        }
 
-       public Date getLastAlertLtz() {
+       public ZonedDateTime getLastAlertLtz() {
               return lastAlertLtz;
        }
 
-       public void setLastAlertLtz(Date lastAlertLtz) {
+       public void setLastAlertLtz(ZonedDateTime lastAlertLtz) {
               this.lastAlertLtz = lastAlertLtz;
        }
 
@@ -127,7 +127,7 @@ public class Alert {
               return true;
        }
 
-       public Alert(int ebuId, String countryCode, int alertType, int alertStatus, Date lastAlertGmt, Date lastAlertLtz) {
+       public Alert(int ebuId, String countryCode, int alertType, int alertStatus, ZonedDateTime lastAlertGmt, ZonedDateTime lastAlertLtz) {
               super();
               this.ebuId = ebuId;
               this.countryCode = countryCode;

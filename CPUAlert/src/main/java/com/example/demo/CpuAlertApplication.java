@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan
-@EntityScan("com.example.beans")
+@EntityScan
 public class CpuAlertApplication {
 
 	public static void main(String[] args) {

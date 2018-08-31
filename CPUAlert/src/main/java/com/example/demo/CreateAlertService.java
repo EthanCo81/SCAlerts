@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.beans.Alert;
-import com.example.daos.AlertDAO;
+import com.example.demo.data.AlertDAO;
 
 @Service
 public class CreateAlertService {

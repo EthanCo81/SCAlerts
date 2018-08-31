@@ -1,5 +1,10 @@
 package com.example.controllers;
 
+import java.time.DateTimeException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.TemporalAdjuster;
+import java.time.zone.ZoneRulesException;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -35,15 +40,16 @@ public class CreateAlertController {
 		Alert oldAlert = alertService.getAlert(ebuNbr);
 		//Check that the alert flag is not already raised AND that it's a new Express Order alert
 		if (oldAlert.getAlertStatus() == 0 && oldAlert.getAlertType() == 15) {
-			alert.setAlertStatus(1);
+			String s_timeZone = null;
 			if (timeZone.isPresent()) {
-				//alert.setLastAlertLtz(lastAlertLtz);
+				s_timeZone = timeZone.get();
 			}
-			return new ResponseEntity<>(this.createAlertService.createAlert(alert), HttpStatus.CREATED);
+			Alert newAlert = setNewAlert(alert, s_timeZone);
+			return new ResponseEntity<>(this.createAlertService.createAlert(newAlert), HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<>(this.createAlertService.createAlert(oldAlert), HttpStatus.CREATED);
 		}
-	}
+	}	
 	
 	@PutMapping(value= {"/{ebuNbr}/{countryCode}/{timeZone}", "/{ebuNbr}/{countryCode}"}, 
 			consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,14 +59,45 @@ public class CreateAlertController {
 		
 		//Check that the alert flag is not already raised AND that it's a new Express Order alert
 		if (oldAlert.getAlertStatus() == 0 && oldAlert.getAlertType() == 15) {
-			alert.setAlertStatus(1);
+			String s_timeZone = null;
 			if (timeZone.isPresent()) {
-				//alert.setLastAlertLtz(lastAlertLtz);
+				s_timeZone = timeZone.get();
 			}
-			createAlertService.updateAlert(alert);
+			Alert newAlert = setNewAlert(alert, s_timeZone);
+			createAlertService.updateAlert(newAlert);
 			return new ResponseEntity<>(alert, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(oldAlert, HttpStatus.OK);
+		}
+	}
+	
+	public Alert setNewAlert(Alert alert, String timeZone) {
+		alert.setAlertStatus(1);
+		ZonedDateTime currentGmtTime = ZonedDateTime.now(ZoneId.of("GMT"));
+		alert.setLastAlertGmt(currentGmtTime);
+		if (timeZone != null) {
+			ZonedDateTime localTime = ZonedDateTime.of(currentGmtTime.toLocalDateTime(), ZoneId.of(timeZone));
+			alert.setLastAlertLtz(localTime);
+		} else {
+			
+		}
+		
+		return alert;
+	}
+	
+	public ZoneId validateTimeZone (String timeZone) {
+		ZoneId zone;
+		try {
+			zone = ZoneId.of(timeZone);
+			return zone;
+		} catch (ZoneRulesException e){
+			System.out.println("Invalid time zone.");
+			zone = ZoneId.of("GMT");
+			return zone;
+		} catch (DateTimeException e) {
+			System.out.println("Invalid time zone format");
+			zone = ZoneId.of("GMT");
+			return zone;
 		}
 	}
 }
