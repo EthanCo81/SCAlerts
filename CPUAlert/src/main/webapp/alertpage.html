@@ -1,0 +1,97 @@
+﻿<html>
+<head>
+    <title>Sams Club CPU</title>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link href="./css/alertpage.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./js/alertpage.js"></script>
+    <!--<script type="text/javascript">
+        $(document).ready(function () {
+                $("#ebu-input").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+        });
+    </script>-->
+</head>
+<body class="home">
+    <div>
+
+        <!--bottom footer-->
+        <footer>
+                <div id="store-info">
+                </div>
+
+        </footer>
+        <div id="samsbar">
+            <div>
+                <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box">
+
+                    <div class="samsimage">
+                        <img id="logo" link ="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Sams_Club.svg/1200px-Sams_Club.svg.png" 
+                             alt="Click to input store number" data-toggle="modal" data-target="#ebu-input" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div id="ordertable">
+        </div>
+
+
+
+    </div>
+    <!-- Modal for alert-->
+    <div id="alert" class="modal fade modal-lg container-fluid modal-alert modal-allow-overflow" role="alert">
+        <div class="modal-dialog modal-lg modal-alert">
+            <div class="modal-content">
+                <div class="modal-header modal-lg modal-alert-header">
+                    <h1 class="modal-alert-title"><b>ALERT</b></h1>
+                </div>
+                <div class="modal-body modal-lg modal-alert-body">
+                    <h1 class="alert-text">NEW 1-HOUR EXPRESS ORDER</h1>
+                </div>
+
+
+                <div class="modal-footer modal-lg modal-alert-footer">
+                    <button id="acknowledge-button" type="submit" class="btn btn-danger" data-dismiss="modal">Acknowledge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal for input-->
+    <div id="ebu-input" class="modal fade modal-sm container-fluid modal-allow-overflow" role="form">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header modal-sm modal-ebu-header">
+                    <h5 class="modal-title modal-ebu-title">Store Identification</h5>
+                </div>
+                <div class="modal-body modal-sm modal-ebu-body">
+                        <input type="number" placeholder="EBU Number" name="ebuNbr" id="ebuNbr" />
+                        <input list="countryCodes" name="countryCode" placeholder="Country" id="countryCode">
+                        <datalist id="countryCodes" name="countryCode">
+                            <option hiddenvalue="1" value="USA"></option>
+                        </datalist>
+                    <div id="null-div">
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer modal-sm modal-ebu-footer">
+                    <button id="ebu-button" type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
