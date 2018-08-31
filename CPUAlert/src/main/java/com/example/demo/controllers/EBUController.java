@@ -8,17 +8,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.beans.Alert;
-import com.example.demo.services.AlertService;
+import com.example.beans.EBUInfo;
+import com.example.demo.services.EBUInfoService;
 
 @RestController
-public class AlertController {
-	@Autowired
-	private AlertService alertService;
+public class EBUController {
 	
-	@RequestMapping(value = "/alert/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
-	public ResponseEntity<Alert> getAlert(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
-		Alert a = alertService.getAlert(countryCode, ebuNbr);
-		return new ResponseEntity<> (a, HttpStatus.OK);
+	@Autowired
+	private EBUInfoService ebuService;
+	
+	@RequestMapping(value = "/ebu/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
+	public ResponseEntity<EBUInfo> getInfo(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
+		EBUInfo info = ebuService.getInfo(countryCode, ebuNbr);
+		return new ResponseEntity<> (info, HttpStatus.OK);
 	}
+
 }

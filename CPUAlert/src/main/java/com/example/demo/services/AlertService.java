@@ -1,10 +1,7 @@
 package com.example.demo.services;
 
-import org.springframework.stereotype.Service;
-
 import com.example.beans.Alert;
 
-@Service
 public interface AlertService {
 		
 	/*
@@ -13,5 +10,5 @@ public interface AlertService {
 	 * @param ebuNbr
 	 * @return Alert 
 	 */
-	public Alert getAlert(int ebuNbr);
+	public Alert getAlert(String countryCode, int ebuNbr);
 }

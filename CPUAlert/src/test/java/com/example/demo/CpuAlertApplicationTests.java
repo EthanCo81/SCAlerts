@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.beans.Alert;
+import com.example.beans.EBUInfo;
+import com.example.beans.EBUid;
 import com.example.controllers.CreateAlertController;
 
 @RunWith(SpringRunner.class)
@@ -24,36 +26,42 @@ public class CpuAlertApplicationTests {
 	public void testTimeZoneValidationValidatesTimeZone() {
 		CreateAlertController cac = new CreateAlertController();
 		ZoneId z = ZoneId.of("America/Chicago");
-		assertThat(z).isEqualTo(cac.validateTimeZone("America/Chicago"));
+		assertThat(z).isEqualTo(cac.validateTimeZone("America/Chicago", "GMT"));
 	}
 	
 	@Test
 	public void testTimeZoneValidationDoesNotValidateTimeZoneInvalidZone() {
 		CreateAlertController cac = new CreateAlertController();
 		ZoneId z = ZoneId.of("GMT");
-		assertThat(z).isEqualTo(cac.validateTimeZone("Amica/Chicgo"));
+		assertThat(z).isEqualTo(cac.validateTimeZone("Amica/Chicgo", "GMT"));
 	}
 	
 	@Test
 	public void testTimeZoneValidationDoesNotValidateTimeZoneInvalidFormat() {
 		CreateAlertController cac = new CreateAlertController();
 		ZoneId z = ZoneId.of("GMT");
-		assertThat(z).isEqualTo(cac.validateTimeZone("1155"));
+		assertThat(z).isEqualTo(cac.validateTimeZone("1155", "GMT"));
 	}
 	
 	@Test
 	public void testAlertIsSetCorrectly() {
 		CreateAlertController cac = new CreateAlertController();
 		//Alert to be changed
+		EBUid ebuID = new EBUid("US", 15);
+		EBUInfo ebuInfo = new EBUInfo();
+		ebuInfo.setCity("Chicago");
+		ebuInfo.setEbuId(ebuID);
+		ebuInfo.setState("Illinois");
+		ebuInfo.setTimezone("America/Chicago");
+		
 		Alert a = new Alert();
 		a.setAlertStatus(0);
 		a.setAlertType(15);
-		a.setCountryCode("US");
-		a.setEbuId(469721);
+		a.setEbuId(ebuID);
 		a.setLastAlertGmt(null);
 		a.setLastAlertLtz(null);
 		
-		cac.setNewAlert(a, "America/Chicago");
+		cac.setNewAlert(a, "America/Chicago", ebuInfo);
 		
 		assertThat(a.getAlertStatus()).isEqualTo(1);
 		assertThat(a.getLastAlertGmt()).isNotNull();
