@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +28,18 @@ public class AlertServiceImpl  implements AlertService{
 			return alertRepo.findById(id).get();
 		}
 		return null;
+	}
+	
+	@Transactional
+	@Override
+	public Alert createAlert(Alert alert) {
+		System.out.println(alert);
+		return alertRepo.saveAndFlush(alert);
+	}
+	
+	@Transactional
+	@Override
+	public void updateAlert(Alert alert) {
+		alertRepo.save(alert);
 	}
 }
