@@ -63,7 +63,7 @@ public class AcknowledgeController {
 
 		//check alert status (to see if alert history needs to be updated)
 
-		javafx.scene.control.Alert alert = new Alert();
+		Alert alert = new Alert();
 
 		alert = acknowledgeService.readAlert(EBUid);
 		
