@@ -1,40 +1,26 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.data.AcknowledgeRepository;
-
-import io.swagger.annotations.ApiModel;
 
 import com.example.beans.Alert;
 import com.example.beans.EBUid;
 
+import io.swagger.annotations.ApiModel;
 
 /**
- * Implementation for Acknowledge service layer
+ * Interface for Acknowledge service layer
  * 
  * @author Larry Kang
  *
  */
 @Service
 @ApiModel (value = "AcknowledgeService", description = "Implementation for the Acknowledge service layer")
-public class AcknowledgeService {
+public interface AcknowledgeService {
 
-	
-
-	//wiring in dao for persistence methods
-
-	@Autowired
-
-	private AcknowledgeRepository ad;
-
-	
 
 	/**
 	 * Creates a new alert
@@ -45,11 +31,7 @@ public class AcknowledgeService {
 
 	@Transactional
 
-	public Alert createAlert(Alert alert) {
-
-		return ad.save(alert);
-
-	}
+	public Alert createAlert(Alert alert);
 
 	
 
@@ -60,11 +42,7 @@ public class AcknowledgeService {
 	 * @return Alert - the retrieved Alert
 	 */
 
-	public Alert readAlert(EBUid EBUid) {
-
-		return ad.findById(EBUid).get();
-
-	}
+	public Alert readAlert(EBUid EBUid);
 
 	
 
@@ -74,15 +52,7 @@ public class AcknowledgeService {
 	 * @return List<Alert> - A list of all alerts
 	 */
 
-	public List<Alert> readAllAlerts(){
-
-		List<Alert> alerts = new ArrayList<>();
-
-		ad.findAll().forEach(alerts::add);
-
-		return alerts;
-
-	}
+	public List<Alert> readAllAlerts();
 
 	
 
@@ -94,11 +64,7 @@ public class AcknowledgeService {
 
 	@Transactional
 
-	public void updateAlert(Alert alert) {
-
-		ad.save(alert);
-
-	}
+	public void updateAlert(Alert alert);
 
 	
 
@@ -110,12 +76,6 @@ public class AcknowledgeService {
 
 	@Transactional
 
-	public void deleteAlert(EBUid EBUid) {
-
-		ad.deleteById(EBUid);
-
-	}
-
-	
+	public void deleteAlert(EBUid EBUid);
 
 }

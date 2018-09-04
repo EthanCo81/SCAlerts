@@ -1,38 +1,24 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.beans.AlertHistory;
 import com.example.beans.AlertHistoryId;
-import com.example.demo.data.HistoryRepository;
 
 import io.swagger.annotations.ApiModel;
 
 
 /**
- * Implementation for History service layer
+ * Interface for History service layer
  * 
  * @author Larry Kang
  *
  */
 @Service
 @ApiModel(value = "HistoryService", description = "Implementation for the History service layer")
-public class HistoryService {
-
-
-
-	//wiring in Repository for persistence methods
-
-	@Autowired
-
-	private HistoryRepository hd;
-
+public interface HistoryService {
 	
 
 	/**
@@ -41,14 +27,7 @@ public class HistoryService {
 	 * @param alertHistory - The AlertHistory to be created
 	 * @return AlertHistory - The AlertHistory that was created
 	 */
-
-	@Transactional
-
-	public AlertHistory createAlertHistory(AlertHistory alertHistory) {
-
-		return hd.save(alertHistory);
-
-	}
+	public AlertHistory createAlertHistory(AlertHistory alertHistory);
 
 	
 
@@ -58,14 +37,7 @@ public class HistoryService {
 	 * @param alertHistoryId - The ID of the AlertHistory
 	 * @return AlertHistory - The AlertHistory that was retrieved
 	 */
-
-	@Transactional
-
-	public AlertHistory readAlertHistory(AlertHistoryId alertHistoryId) {
-
-		return hd.getOne(alertHistoryId);
-
-	}
+	public AlertHistory readAlertHistory(AlertHistoryId alertHistoryId);
 
 	
 
@@ -75,17 +47,7 @@ public class HistoryService {
 	 * @return List<AlertHistor> - A list of all AlertHistories
 	 */
 
-	@Transactional
-
-	public List<AlertHistory> readAllAlertHistories(){
-
-		List<AlertHistory> alertHistories = new ArrayList<>();
-
-		hd.findAll().forEach(alertHistories::add);
-
-		return alertHistories;
-
-	}
+	public List<AlertHistory> getAllHistories(String countryCode, int ebuNbr);
 
 	
 
@@ -95,13 +57,7 @@ public class HistoryService {
 	 * @param alertHistory - The AlertHistory to be updated
 	 */
 
-	@Transactional
-
-	public void updateAlertHistory(AlertHistory alertHistory) {
-
-		hd.save(alertHistory);
-
-	}
+	public void updateAlertHistory(AlertHistory alertHistory);
 
 	
 
@@ -110,13 +66,6 @@ public class HistoryService {
 	 * 
 	 * @param alertHistoryId - The ID of the AlertHistory to be deleted
 	 */
-
-	@Transactional
-
-	public void deleteAlertHistory(AlertHistoryId alertHistoryId) {
-
-		hd.deleteById(alertHistoryId);
-
-	}
+	public void deleteAlertHistory(AlertHistoryId alertHistoryId);
 
 }

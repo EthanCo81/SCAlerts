@@ -38,7 +38,7 @@ public class EBUController {
 		if (info != null) {
 			return new ResponseEntity<> (info, HttpStatus.OK);
 		}
-		return new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<> (info, HttpStatus.NOT_FOUND);
 	}
 
 }
