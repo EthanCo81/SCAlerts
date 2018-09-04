@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -51,19 +50,16 @@ public class HistoryServiceImpl {
 	}
 
 	
-
-	//read all alerts method
-
+	
 	@Transactional
 
-	public List<AlertHistory> readAllAlertHistories(){
-
-		List<AlertHistory> alertHistories = new ArrayList<>();
-
-		hd.findAll().forEach(alertHistories::add);
-
-		return alertHistories;
-
+	//read all alerts method
+		public List<AlertHistory> getHistory(String countryCode, int ebuNbr) {
+			
+			List<AlertHistory> history = hd.getHistory(countryCode, ebuNbr);
+			
+			return history;
+		
 	}
 
 	
