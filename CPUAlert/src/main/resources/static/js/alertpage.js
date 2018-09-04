@@ -26,7 +26,7 @@ function getAlerts() {
 
 function sendAcknowledge() {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "acknowledge/" + countryCode + "/" + ebuNbr, true);
+    xhttp.open("PUT", "acknowledge/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
 
     interval = setInterval(getAlerts, 10000);
