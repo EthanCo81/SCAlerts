@@ -8,23 +8,37 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * Define Alert POJO
+ * 
+ * @author Larry Kang
+ *
+ */
+@ApiModel (value="Alert", description="A new 1-hour Alert")
 @Entity
 @Table(name="alert")
 public class Alert {
-	   
+	
+	@ApiModelProperty(value = "Composite id of the alert consisting of countryCode and ebuNbr")
 	@EmbeddedId
 	private EBUid ebuId;
-       
+	
+	@ApiModelProperty(value = "The type of alert (Pick Due(10), Express Order(15), Check-In(20), etc.)")
 	@Column(name="alert_type_cd")
    	private int alertType;
-   
+	
+	@ApiModelProperty(value ="The status of the alert (None(0), Active(1))")
 	@Column(name="alert_status_cd")
    	private int alertStatus;
 
+	@ApiModelProperty(value ="Timestamp for GMT timezone of when the alert was received")
 	@Column(name="last_alert_ts_gmt")
 	private LocalDateTime lastAlertGmt;
    
+	@ApiModelProperty(value ="Timestamp for local timezone of when the alert was received")
 	@Column(name="last_alert_ts_ltz")
 	private LocalDateTime lastAlertLtz;
    

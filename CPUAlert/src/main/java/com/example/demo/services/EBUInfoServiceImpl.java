@@ -7,6 +7,12 @@ import com.example.beans.EBUInfo;
 import com.example.beans.EBUid;
 import com.example.demo.data.EBUInfoRepository;
 
+/**
+ * Implementation for EBUInfo service layer
+ * 
+ * @author Thomas Santillan
+ *
+ */
 @Service
 public class EBUInfoServiceImpl implements EBUInfoService{
 	

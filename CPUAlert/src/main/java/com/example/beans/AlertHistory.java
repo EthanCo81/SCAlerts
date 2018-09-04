@@ -8,38 +8,46 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
+/**
+ * Define AlertHistory POJO
+ * 
+ * @author Larry Kang
+ *
+ */
 @Component
 
 @Entity
 
 @Table(name="alert_history")
-
+@ApiModel(value = "AlertHistory", description = "The History of previous Alerts")
 public class AlertHistory {
 
 	
 
 	@EmbeddedId
-
+	@ApiModelProperty(value ="The composite ID of AlertHistory")
 	private AlertHistoryId alertHistoryId;
 
 	
 
 	@Column(name="alert_start_ts_ltz")
-
+	@ApiModelProperty(value ="Timestamp in local time of when the alert started")
 	private LocalDateTime alertStartLtz;
 
 	
 
 	@Column(name="alert_end_ts_gmt")
-
+	@ApiModelProperty(value ="Timestamp in GMT of when the alert was acknowledged")
 	private LocalDateTime alertEndGmt;
 
 	
 
 	@Column(name="alert_end_ts_ltz")
-
+	@ApiModelProperty(value ="Timestamp in local time of when the alert was acknowledged")
 	private LocalDateTime alertEndLtz;
 
 

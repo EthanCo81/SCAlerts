@@ -12,7 +12,12 @@ import com.example.beans.AlertHistoryId;
 import com.example.demo.data.HistoryRepository;
 
 
-
+/**
+ * Implementation of the History service layer
+ * 
+ * @author Larry Kang
+ *
+ */
 @Service
 
 public class HistoryServiceImpl implements HistoryService{

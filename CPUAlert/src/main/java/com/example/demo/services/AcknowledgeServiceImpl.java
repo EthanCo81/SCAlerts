@@ -13,7 +13,12 @@ import com.example.beans.EBUid;
 import com.example.demo.data.AlertRepository;
 
 
-
+/**
+ * Implementation of the Acknowledge service layer
+ * 
+ * @author Larry Kang
+ *
+ */
 @Service
 
 public class AcknowledgeServiceImpl implements AcknowledgeService{
