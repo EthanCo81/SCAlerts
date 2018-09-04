@@ -15,7 +15,7 @@ import com.example.demo.data.HistoryRepository;
 
 @Service
 
-public class HistoryServiceImpl {
+public class HistoryServiceImpl implements HistoryService{
 
 
 
@@ -54,7 +54,7 @@ public class HistoryServiceImpl {
 	@Transactional
 
 	//read all alerts method
-		public List<AlertHistory> getHistory(String countryCode, int ebuNbr) {
+		public List<AlertHistory> getAllHistories(String countryCode, int ebuNbr) {
 			
 			List<AlertHistory> history = hd.getHistory(countryCode, ebuNbr);
 			
