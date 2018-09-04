@@ -18,7 +18,7 @@ import com.example.beans.AlertHistoryId;
 public interface HistoryRepository extends JpaRepository<AlertHistory, AlertHistoryId>{
 
 	  @Query("SELECT h FROM AlertHistory h WHERE h.alertHistoryId.countryCode = :countryCode AND h.alertHistoryId.ebuNbr = :ebuNbr")
-		public List<AlertHistory> getHistory(@Param ("countryCode")String countryCode, @Param("ebuNbr") int ebuNbr);
+		public List<AlertHistory> getAllHistories(@Param ("countryCode")String countryCode, @Param("ebuNbr") int ebuNbr);
 
 }
 

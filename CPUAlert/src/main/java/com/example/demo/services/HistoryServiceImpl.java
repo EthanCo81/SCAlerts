@@ -56,7 +56,7 @@ public class HistoryServiceImpl implements HistoryService{
 	//read all alerts method
 		public List<AlertHistory> getAllHistories(String countryCode, int ebuNbr) {
 			
-			List<AlertHistory> history = hd.getHistory(countryCode, ebuNbr);
+			List<AlertHistory> history = hd.getAllHistories(countryCode, ebuNbr);
 			
 			return history;
 		
