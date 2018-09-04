@@ -92,7 +92,7 @@ public class AcknowledgeController {
 
 			AlertHistory alertHistory = new AlertHistory();
 
-			alertHistory = historyService.readAlertHistory(alertHistoryId);
+			alertHistory.setAlertHistoryId(alertHistoryId);
 					
 			alertHistory.setAlertStartLtz(alert.getLastAlertLtz());
 
