@@ -92,11 +92,7 @@ public class AcknowledgeController {
 			alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
 
 			historyService.updateAlertHistory(alertHistory);
-
 			
-
-			System.out.println(alertHistory.toString());
-
 			
 
 			//return "OK" http status code
