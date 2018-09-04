@@ -15,8 +15,8 @@ import com.example.beans.Alert;
 import com.example.beans.AlertHistory;
 import com.example.beans.AlertHistoryId;
 import com.example.beans.EBUid;
-import com.example.demo.services.AcknowledgeService;
-import com.example.demo.services.HistoryService;
+import com.example.demo.services.AcknowledgeServiceImpl;
+import com.example.demo.services.HistoryServiceImpl;
 
 
 
@@ -28,13 +28,13 @@ public class AcknowledgeController {
 
 	@Autowired
 
-	private AcknowledgeService acknowledgeService;
+	private AcknowledgeServiceImpl acknowledgeService;
 
 	
 
 	@Autowired
 
-	private HistoryService historyService;
+	private HistoryServiceImpl historyService;
 
 	
 
