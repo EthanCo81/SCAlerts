@@ -37,12 +37,14 @@ function sendEbuInfo() {
     countryCode = document.getElementById("countryCode").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = isStore;
+    xhttp.onerror = isStore;
     xhttp.open("GET", "ebu/" + countryCode + "/" + ebuNbr, true);
+    
     xhttp.send();
     
     function isStore() {
         if (xhttp.readyState === 4) {
-        	if{xhttp.statusCode === 404}
+        	if(xhttp.statusCode === 404)
         		console.log(xhttp.responseText);
                 document.getElementById("null-div").innerHTML = "Invalid store code";
             } else if (xhttp.statusCode === 200){
