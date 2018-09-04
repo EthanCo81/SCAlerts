@@ -1,7 +1,6 @@
 package com.example.beans;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
