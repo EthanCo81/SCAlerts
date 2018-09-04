@@ -52,8 +52,8 @@ public class AcknowledgeController {
 		//update alert end time in "alert_history" table
 		AlertHistory alertHistory = new AlertHistory();
 		alertHistory = historyService.readAlertHistory(alertIdentity);
-		alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")));
-		alertHistory.setAlertEndLtz(ZonedDateTime.now());
+		alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
+		alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
 		historyService.updateAlertHistory(alertHistory);
 		
 		System.out.println(alertHistory.toString());

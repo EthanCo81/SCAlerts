@@ -1,6 +1,6 @@
 package com.alert.acknowledge.beans;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -21,16 +21,16 @@ public class AlertHistory {
 	private int alertType;
 	
 	@Column(name="alert_start_ts_gmt")
-	private ZonedDateTime alertStartGmt;
+	private LocalDateTime alertStartGmt;
 	
 	@Column(name="alert_start_ts_ltz")
-	private ZonedDateTime alertStartLtz;
+	private LocalDateTime alertStartLtz;
 	
 	@Column(name="alert_end_ts_gmt")
-	private ZonedDateTime alertEndGmt;
+	private LocalDateTime alertEndGmt;
 	
 	@Column(name="alert_end_ts_ltz")
-	private ZonedDateTime alertEndLtz;
+	private LocalDateTime alertEndLtz;
 
 	public AlertIdentity getAlertIdentity() {
 		return alertIdentity;
@@ -48,35 +48,35 @@ public class AlertHistory {
 		this.alertType = alertType;
 	}
 
-	public ZonedDateTime getAlertStartGmt() {
+	public LocalDateTime getAlertStartGmt() {
 		return alertStartGmt;
 	}
 
-	public void setAlertStartGmt(ZonedDateTime alertStartGmt) {
+	public void setAlertStartGmt(LocalDateTime alertStartGmt) {
 		this.alertStartGmt = alertStartGmt;
 	}
 
-	public ZonedDateTime getAlertStartLtz() {
+	public LocalDateTime getAlertStartLtz() {
 		return alertStartLtz;
 	}
 
-	public void setAlertStartLtz(ZonedDateTime alertStartLtz) {
+	public void setAlertStartLtz(LocalDateTime alertStartLtz) {
 		this.alertStartLtz = alertStartLtz;
 	}
 
-	public ZonedDateTime getAlertEndGmt() {
+	public LocalDateTime getAlertEndGmt() {
 		return alertEndGmt;
 	}
 
-	public void setAlertEndGmt(ZonedDateTime alertEndGmt) {
+	public void setAlertEndGmt(LocalDateTime alertEndGmt) {
 		this.alertEndGmt = alertEndGmt;
 	}
 
-	public ZonedDateTime getAlertEndLtz() {
+	public LocalDateTime getAlertEndLtz() {
 		return alertEndLtz;
 	}
 
-	public void setAlertEndLtz(ZonedDateTime alertEndLtz) {
+	public void setAlertEndLtz(LocalDateTime alertEndLtz) {
 		this.alertEndLtz = alertEndLtz;
 	}
 
@@ -139,8 +139,8 @@ public class AlertHistory {
 				+ alertEndLtz + "]";
 	}
 
-	public AlertHistory(AlertIdentity alertIdentity, int alertType, ZonedDateTime alertStartGmt,
-			ZonedDateTime alertStartLtz, ZonedDateTime alertEndGmt, ZonedDateTime alertEndLtz) {
+	public AlertHistory(AlertIdentity alertIdentity, int alertType, LocalDateTime alertStartGmt,
+			LocalDateTime alertStartLtz, LocalDateTime alertEndGmt, LocalDateTime alertEndLtz) {
 		super();
 		this.alertIdentity = alertIdentity;
 		this.alertType = alertType;
