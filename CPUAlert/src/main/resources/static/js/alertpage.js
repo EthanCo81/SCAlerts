@@ -4,7 +4,6 @@ ebuNbr = null;
 
 
 function getAlerts() {
-    console.log("called get alerts")
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = sendAlert;
     xhttp.open("GET", "alert/" + countryCode + "/" + ebuNbr, true);
@@ -12,7 +11,6 @@ function getAlerts() {
     function sendAlert() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             alert = JSON.parse(xhttp.responseText);
-            console.log(alert);
             if (alert.alertStatus === 1) {
                 $("#alert").modal({
                     backdrop: 'static',
@@ -44,12 +42,9 @@ function sendEbuInfo() {
     
     function isStore() {
         if (xhttp.readyState === 4) {
-
-        	if(xhttp.statusCode === 404) {
-        		console.log(xhttp.responseText);
+        	if(xhttp.status === 404) {
                 document.getElementById("null-div").innerHTML = "Invalid store code";
-            } else if (xhttp.statusCode === 200){
-            	console.log(xhttp.responseText);
+            } else if (xhttp.status === 200){
             	ebu = JSON.parse(xhttp.responseText);
                 document.getElementById("store-info").innerText =
                     `${ebu.city}, ${ebu.state}	
