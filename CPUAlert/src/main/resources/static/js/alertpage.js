@@ -41,12 +41,13 @@ function sendEbuInfo() {
     xhttp.send();
     
     function isStore() {
-        if (xhttp.readyState === 4 && xhttp.status === 200) {
-            if (xhttp.responseText.notifyType !== null) {
+        if (xhttp.readyState === 4) {
+        	if{xhttp.statusCode === 404}
+        		console.log(xhttp.responseText);
                 document.getElementById("null-div").innerHTML = "Invalid store code";
-            } else {
+            } else if (xhttp.statusCode === 200){
             	console.log(xhttp.responseText);
-                ebu = JSON.parse(xhttp.responseText);
+            	ebu = JSON.parse(xhttp.responseText);
                 document.getElementById("store-info").innerText =
                     `${ebu.city}, ${ebu.state}	
                      Store #${ebuNbr}	`;
