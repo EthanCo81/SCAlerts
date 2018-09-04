@@ -1,19 +1,29 @@
-
+#samsbar {
+    background: #0B0B3B;
+    width: 12%;
+    position: absolute;
+    height: 100%;
+}
 
 footer {
     background: #5584ff;
     position: fixed;
     bottom: 0;
-    
-    width: 100%;
+    width: 88%;
     height: 15%;
+    display: inline;
+    left: 12%;
 }
 
-#samsbar {
-    background: #0B0B3B;
-    width: 160px;
+
+
+#ordertable {
+    position:center;
+    height: 67%;
+    width: 70%;
+    left: 21%;
+    top: 9%;
     position: absolute;
-    height: 100%;
 }
 
 
@@ -68,4 +78,32 @@ footer {
         text-align: right;
         color: white;
         font: bold;
+        font-size:large;
+        float: right;
+        right: 5%;
+        position: absolute;
     }
+
+    #datetime {
+        text-align:center;
+        font-size:large;
+        color: white;
+        position:absolute;
+        float:left;
+        left: 38%;
+    }
+
+
+    #no-orders{
+        color: green;
+        text-align:center;
+        position: center;
+        font-size:60px;
+    }
+
+    #alert-history{
+        position:fixed;
+        bottom: 10%;
+        
+    }
+}

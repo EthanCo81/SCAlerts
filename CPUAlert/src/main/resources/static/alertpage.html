@@ -26,9 +26,12 @@
 
         <!--bottom footer-->
         <footer>
-                <div id="store-info">
-                </div>
 
+            
+            <div>
+                <div id="datetime"></div>
+                <div id="store-info"></div>
+            </div>
         </footer>
 
         <!--Sidebar with Logo-->
@@ -40,15 +43,16 @@
                         <img id="logo" link ="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Sams_Club.svg/1200px-Sams_Club.svg.png" 
                              alt="Click to input store number" data-toggle="modal" data-target="#ebu-input" />
                     </div>
+                    <div id="alert-history"><button class="btn btn-primary btn-lrg" id="alert-history-button">Alert History</button></div>
                 </div>
 
             </div>
         </div>
-        <div id="ordertable">
-        </div>
 
 
-
+    </div>
+    <div id="ordertable">
+        <div id="no-orders">No new orders</div>
     </div>
     <!-- Modal for alert-->
     <div id="alert" class="modal fade modal-lg container-fluid modal-alert modal-allow-overflow" role="alert">

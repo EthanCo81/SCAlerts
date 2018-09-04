@@ -1,6 +1,7 @@
 
 countryCode = null;
 ebuNbr = null;
+historyTableDisplay = false;
 
 
 function getAlerts() {
@@ -58,8 +59,47 @@ function sendEbuInfo() {
     }
 }
 
+function checkTime() {
+    document.getElementById("datetime").innerText = (new Date()).toDateString()+ "\n" + (new Date()).toLocaleTimeString();
+}
+
+function viewHistory() {
+    if (historyTableDisplay === true) {
+        document.getElementById("ordertable").innerHTML = `<div id="no-orders">No new orders</div>`;
+        historyTableDisplay = false;
+        return;
+    }
+    historyTableDisplay = true;
+    console.log("opening history req");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = returnedHistory;
+    xhttp.open("GET", "/alert/history/" + countryCode + "/" + ebuNbr, true);
+    xhttp.send();
+
+    function returnedHistory() {
+        console.log(xhttp.readyState + " " + xhttp.status);
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+            var historyTable = JSON.parse(xhttp.responseText);
+            console.log(historyTable);
+            document.getElementById("ordertable").innerHTML = `<table id="history-table" border="1"><tr><td>Alert Code</td><td>Alert Start Time</td><td>Alert Acknowledge Time</td></tr></table>`;
+            for (a in historyTable) {
+                document.getElementById("history-table").innerHTML +=
+                    `<tr><td>${historyTable[a].alertHistoryId.alertType}</td>
+                        <td>${new Date(historyTable[a].alertStartLtz).toLocaleString()}</td>
+                        <td>${new Date(historyTable[a].alertEndLtz).toLocaleString()}</td>
+                      </tr>
+                    `;
+                
+                document.getElementById("history-table").innerHTML += `</tr>`;
+            }
+        }
+    }
+}
+
 window.onload = function () {
     document.getElementById("acknowledge-button").addEventListener("click", sendAcknowledge);
     document.getElementById("ebu-button").addEventListener("click", sendEbuInfo);
+    document.getElementById("alert-history-button").addEventListener("click", viewHistory);
+    time = setInterval(checkTime, 1000);
 };
 
