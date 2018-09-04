@@ -75,10 +75,10 @@ public class AcknowledgeController {
 			alert.setAlertStatus(0);
 
 			acknowledgeService.updateAlert(alert);
-
 			
 
-			//update alert end time in "alert_history" table
+			
+			//create alert history id from latest timestamp
 			
 			AlertHistoryId alertHistoryId = new AlertHistoryId();
 			
@@ -90,6 +90,10 @@ public class AcknowledgeController {
 			
 			alertHistoryId.setAlertStartGmt(alert.getLastAlertGmt());
 
+			
+			
+			//update alert end time in "alert_history" table
+			
 			AlertHistory alertHistory = new AlertHistory();
 
 			alertHistory.setAlertHistoryId(alertHistoryId);
