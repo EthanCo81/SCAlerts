@@ -53,13 +53,13 @@ public class AcknowledgeController {
 
 	
 	/**
-	 * Inserts a new Alert History
+	 * Acknowledges an Alert by updating the alert status and inserts a new Alert History
 	 * @param ebuNbr - Store number
 	 * @param countryCode - The country code e.g. "US"
 	 * @return HTTP status code
 	 */
-	@ApiOperation(value = "Inserts a new Alert History", response = Alert.class)
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert History inserted") } )
+	@ApiOperation(value = "Updates Alert status and inserts a new Alert History", response = Alert.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert status updated and Alert History inserted") } )
 	@RequestMapping(value="/acknowledge/{country_code}/{ebu_nbr}", method=RequestMethod.POST)
 
 	public ResponseEntity<HttpStatus> acknowledgeAlert(@PathVariable("country_code") String countryCode, @PathVariable("ebu_nbr") Integer ebuId){
