@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
 import com.example.beans.AlertHistory;
+import com.example.beans.AlertHistoryId;
 import com.example.beans.EBUid;
 import com.example.demo.services.AcknowledgeService;
 import com.example.demo.services.HistoryService;
@@ -74,30 +75,38 @@ public class AcknowledgeController {
 			alert.setAlertStatus(0);
 
 			acknowledgeService.updateAlert(alert);
-
 			
 
-			//update alert end time in "alert_history" table
+			
+			//create alert history id from latest timestamp
+			
+			AlertHistoryId alertHistoryId = new AlertHistoryId();
+			
+			alertHistoryId.setCountryCode(countryCode);
+			
+			alertHistoryId.setEbuNbr(ebuId);
+			
+			alertHistoryId.setAlertType(alert.getAlertType());
+			
+			alertHistoryId.setAlertStartGmt(alert.getLastAlertGmt());
 
+			
+			
+			//update alert end time in "alert_history" table
+			
 			AlertHistory alertHistory = new AlertHistory();
 
-			alertHistory = historyService.readAlertHistory(EBUid);
-			
-			alertHistory.setAlertEndGmt(alert.getLastAlertGmt());
-		
-			alertHistory.setAlertEndLtz(alert.getLastAlertLtz());
+			alertHistory.setAlertHistoryId(alertHistoryId);
+					
+			alertHistory.setAlertStartLtz(alert.getLastAlertLtz());
 
 			alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
 
 			alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
 
-			historyService.updateAlertHistory(alertHistory);
-
+			historyService.createAlertHistory(alertHistory);
 			
 
-			System.out.println(alertHistory.toString());
-
-			
 
 			//return "OK" http status code
 

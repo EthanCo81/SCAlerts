@@ -22,19 +22,7 @@ public class AlertHistory {
 
 	@EmbeddedId
 
-	private EBUid EBUid;
-
-	
-
-	@Column(name="alert_type_cd")
-
-	private int alertType;
-
-	
-
-	@Column(name="alert_start_ts_gmt")
-
-	private LocalDateTime alertStartGmt;
+	private AlertHistoryId alertHistoryId;
 
 	
 
@@ -56,248 +44,124 @@ public class AlertHistory {
 
 
 
-	public EBUid getEBUid() {
-
-		return EBUid;
-
+	public AlertHistoryId getAlertHistoryId() {
+		return alertHistoryId;
 	}
 
 
 
-	public void setEBUid(EBUid EBUid) {
-
-		this.EBUid = EBUid;
-
-	}
-
-
-
-	public int getAlertType() {
-
-		return alertType;
-
-	}
-
-
-
-	public void setAlertType(int alertType) {
-
-		this.alertType = alertType;
-
-	}
-
-
-
-	public LocalDateTime getAlertStartGmt() {
-
-		return alertStartGmt;
-
-	}
-
-
-
-	public void setAlertStartGmt(LocalDateTime alertStartGmt) {
-
-		this.alertStartGmt = alertStartGmt;
-
+	public void setAlertHistoryId(AlertHistoryId alertHistoryId) {
+		this.alertHistoryId = alertHistoryId;
 	}
 
 
 
 	public LocalDateTime getAlertStartLtz() {
-
 		return alertStartLtz;
-
 	}
 
 
 
 	public void setAlertStartLtz(LocalDateTime alertStartLtz) {
-
 		this.alertStartLtz = alertStartLtz;
-
 	}
 
 
 
 	public LocalDateTime getAlertEndGmt() {
-
 		return alertEndGmt;
-
 	}
 
 
 
 	public void setAlertEndGmt(LocalDateTime alertEndGmt) {
-
 		this.alertEndGmt = alertEndGmt;
-
 	}
 
 
 
 	public LocalDateTime getAlertEndLtz() {
-
 		return alertEndLtz;
-
 	}
 
 
 
 	public void setAlertEndLtz(LocalDateTime alertEndLtz) {
-
 		this.alertEndLtz = alertEndLtz;
-
 	}
 
 
 
 	@Override
-
 	public int hashCode() {
-
 		final int prime = 31;
-
 		int result = 1;
-
 		result = prime * result + ((alertEndGmt == null) ? 0 : alertEndGmt.hashCode());
-
 		result = prime * result + ((alertEndLtz == null) ? 0 : alertEndLtz.hashCode());
-
-		result = prime * result + ((EBUid == null) ? 0 : EBUid.hashCode());
-
-		result = prime * result + ((alertStartGmt == null) ? 0 : alertStartGmt.hashCode());
-
+		result = prime * result + ((alertHistoryId == null) ? 0 : alertHistoryId.hashCode());
 		result = prime * result + ((alertStartLtz == null) ? 0 : alertStartLtz.hashCode());
-
-		result = prime * result + alertType;
-
 		return result;
-
 	}
 
 
 
 	@Override
-
 	public boolean equals(Object obj) {
-
 		if (this == obj)
-
 			return true;
-
 		if (obj == null)
-
 			return false;
-
 		if (getClass() != obj.getClass())
-
 			return false;
-
 		AlertHistory other = (AlertHistory) obj;
-
 		if (alertEndGmt == null) {
-
 			if (other.alertEndGmt != null)
-
 				return false;
-
 		} else if (!alertEndGmt.equals(other.alertEndGmt))
-
 			return false;
-
 		if (alertEndLtz == null) {
-
 			if (other.alertEndLtz != null)
-
 				return false;
-
 		} else if (!alertEndLtz.equals(other.alertEndLtz))
-
 			return false;
-
-		if (EBUid == null) {
-
-			if (other.EBUid != null)
-
+		if (alertHistoryId == null) {
+			if (other.alertHistoryId != null)
 				return false;
-
-		} else if (!EBUid.equals(other.EBUid))
-
+		} else if (!alertHistoryId.equals(other.alertHistoryId))
 			return false;
-
-		if (alertStartGmt == null) {
-
-			if (other.alertStartGmt != null)
-
-				return false;
-
-		} else if (!alertStartGmt.equals(other.alertStartGmt))
-
-			return false;
-
 		if (alertStartLtz == null) {
-
 			if (other.alertStartLtz != null)
-
 				return false;
-
 		} else if (!alertStartLtz.equals(other.alertStartLtz))
-
 			return false;
-
-		if (alertType != other.alertType)
-
-			return false;
-
 		return true;
-
 	}
 
 
 
 	@Override
-
 	public String toString() {
-
-		return "AlertHistory [EBUid=" + EBUid + ", alertType=" + alertType + ", alertStartGmt="
-
-				+ alertStartGmt + ", alertStartLtz=" + alertStartLtz + ", alertEndGmt=" + alertEndGmt + ", alertEndLtz="
-
-				+ alertEndLtz + "]";
-
+		return "AlertHistory [alertHistoryId=" + alertHistoryId + ", alertStartLtz=" + alertStartLtz + ", alertEndGmt="
+				+ alertEndGmt + ", alertEndLtz=" + alertEndLtz + "]";
 	}
 
 
 
-	public AlertHistory(EBUid EBUid, int alertType, LocalDateTime alertStartGmt,
-
-			LocalDateTime alertStartLtz, LocalDateTime alertEndGmt, LocalDateTime alertEndLtz) {
-
+	public AlertHistory(AlertHistoryId alertHistoryId, LocalDateTime alertStartLtz, LocalDateTime alertEndGmt,
+			LocalDateTime alertEndLtz) {
 		super();
-
-		this.EBUid = EBUid;
-
-		this.alertType = alertType;
-
-		this.alertStartGmt = alertStartGmt;
-
+		this.alertHistoryId = alertHistoryId;
 		this.alertStartLtz = alertStartLtz;
-
 		this.alertEndGmt = alertEndGmt;
-
 		this.alertEndLtz = alertEndLtz;
-
 	}
 
 
 
 	public AlertHistory() {
-
 		super();
-
 	}
 
 
-
+	
 }
