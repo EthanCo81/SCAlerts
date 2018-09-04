@@ -19,7 +19,6 @@ public class EBUInfoServiceImpl implements EBUInfoService{
 		if (ebuRepo.existsById(id)) {
 			return ebuRepo.findById(id).get();
 		}
-
 		return null;
 	}
 

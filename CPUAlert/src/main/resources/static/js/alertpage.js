@@ -63,3 +63,4 @@ window.onload = function () {
     document.getElementById("acknowledge-button").addEventListener("click", sendAcknowledge);
     document.getElementById("ebu-button").addEventListener("click", sendEbuInfo);
 };
+
