@@ -43,23 +43,33 @@ public class AcknowledgeController {
 		alertIdentity.setCountryCode(countryCode);
 		alertIdentity.setEbuId(ebuId);
 		
-		//update alert status in "alert" table
+		//check alert status (to see if alert history needs to be updated)
 		Alert alert = new Alert();
 		alert = acknowledgeService.readAlert(alertIdentity);
-		alert.setAlertStatus(0);
-		acknowledgeService.updateAlert(alert);
+		if (alert.getAlertStatus() == 1) {
+			//update alert status in "alert" table
+			alert.setAlertStatus(0);
+			acknowledgeService.updateAlert(alert);
+			
+			//update alert times in "alert_history" table
+			AlertHistory alertHistory = new AlertHistory();
+			alertHistory = historyService.readAlertHistory(alertIdentity);
+			alertHistory.setAlertStartGmt(alert.getLastAlertGmt());
+			alertHistory.setAlertStartLtz(alert.getLastAlertLtz());
+			alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
+			alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
+			historyService.updateAlertHistory(alertHistory);
+			
+			System.out.println(alertHistory.toString());
+			
+			//return "OK" http status code
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 		
-		//update alert end time in "alert_history" table
-		AlertHistory alertHistory = new AlertHistory();
-		alertHistory = historyService.readAlertHistory(alertIdentity);
-		alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
-		alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
-		historyService.updateAlertHistory(alertHistory);
-		
-		System.out.println(alertHistory.toString());
-		
-		//return "OK" http status code
-		return new ResponseEntity<>(HttpStatus.OK);
+
 	}
 	
 }
