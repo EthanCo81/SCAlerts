@@ -31,7 +31,7 @@ public class AlertController {
 	
 	@RequestMapping(value = "/alert/history/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
 	public ResponseEntity<List<AlertHistory>> getAlertHistory(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
-		List<AlertHistory> history = historyService.getHistory(countryCode, ebuNbr);
+		List<AlertHistory> history = historyService.getAllHistories(countryCode, ebuNbr);
 		return new ResponseEntity<> (history, HttpStatus.OK);
 	}
 }

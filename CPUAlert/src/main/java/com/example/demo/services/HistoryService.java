@@ -2,83 +2,19 @@ package com.example.demo.services;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.beans.AlertHistory;
 import com.example.beans.AlertHistoryId;
-import com.example.demo.data.HistoryRepository;
 
+public interface HistoryService {
 
-
-@Service
-
-public class HistoryService {
-
-
-
-	//wiring in Repository for persistence methods
-
-	@Autowired
-
-	private HistoryRepository hd;
-
+	public AlertHistory createAlertHistory(AlertHistory alertHistory);
 	
-
-	//create method
-
-	@Transactional
-
-	public AlertHistory createAlertHistory(AlertHistory alertHistory) {
-
-		return hd.save(alertHistory);
-
-	}
-
+	public AlertHistory readAlertHistory(AlertHistoryId alertHistoryId);
 	
-
-	//read by id method
-
-	@Transactional
-
-	public AlertHistory readAlertHistory(AlertHistoryId alertHistoryId) {
-
-		return hd.getOne(alertHistoryId);
-
-	}
-
+	public List<AlertHistory> getAllHistories(String countryCode, int ebuNbr);
 	
-
-	//read all alerts method
-	public List<AlertHistory> getHistory(String countryCode, int ebuNbr) {
-		List<AlertHistory> history = hd.getHistory(countryCode, ebuNbr);
-		return history;
-	}
-
+	public void updateAlertHistory(AlertHistory alertHistory);
 	
-
-	//update method
-
-	@Transactional
-
-	public void updateAlertHistory(AlertHistory alertHistory) {
-
-		hd.save(alertHistory);
-
-	}
-
+	public void deleteAlertHistory(AlertHistoryId alertHistoryId);
 	
-
-	//delete by id method
-
-	@Transactional
-
-	public void deleteAlertHistory(AlertHistoryId alertHistoryId) {
-
-		hd.deleteById(alertHistoryId);
-
-	}
-
 }
