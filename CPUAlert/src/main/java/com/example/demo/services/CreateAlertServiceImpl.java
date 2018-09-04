@@ -22,7 +22,6 @@ public class CreateAlertServiceImpl implements CreateAlertService{
 	@Transactional
 	@Override
 	public Alert createAlert(Alert alert) {
-		System.out.println(alert);
 		return alertDao.saveAndFlush(alert);
 	}
 	
