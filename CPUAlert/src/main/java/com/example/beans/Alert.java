@@ -1,3 +1,4 @@
+
 package com.example.beans;
 
 import java.time.LocalDateTime;
@@ -130,4 +131,3 @@ public class Alert {
 	}
        
 }
-
