@@ -1,12 +1,13 @@
 package com.example.beans;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class AlertHistoryId {
+public class AlertHistoryId implements Serializable{
 
 	@Column(name = "country_code")
 	private String countryCode;

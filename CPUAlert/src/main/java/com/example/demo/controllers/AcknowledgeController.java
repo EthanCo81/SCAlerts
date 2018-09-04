@@ -93,9 +93,7 @@ public class AcknowledgeController {
 			AlertHistory alertHistory = new AlertHistory();
 
 			alertHistory = historyService.readAlertHistory(alertHistoryId);
-			
-			alertHistory.setAlertStartGmt(alert.getLastAlertGmt());
-		
+					
 			alertHistory.setAlertStartLtz(alert.getLastAlertLtz());
 
 			alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
