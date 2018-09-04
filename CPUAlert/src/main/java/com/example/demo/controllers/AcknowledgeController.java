@@ -25,14 +25,6 @@ public class AcknowledgeController {
 
 
 
-//	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-
-//	String gmt = "31-08-2018 16:16:16";
-
-//	String ltz = "31-08-2018 08:32:23";
-
-
-
 	@Autowired
 
 	private AcknowledgeService acknowledgeService;
@@ -69,45 +61,55 @@ public class AcknowledgeController {
 
 		EBUid.setEbuNbr(ebuId);
 
-		
+		//check alert status (to see if alert history needs to be updated)
 
-		//update alert status in "alert" table
-
-		Alert alert = new Alert();
+		javafx.scene.control.Alert alert = new Alert();
 
 		alert = acknowledgeService.readAlert(EBUid);
-
-		alert.setAlertStatus(0);
-
-		acknowledgeService.updateAlert(alert);
-
 		
+		if(alert.getAlertStatus() == 1 && alert.getAlertType() == 15) {
+			
+			//update alert status in "alert" table
 
-		//update alert end time in "alert_history" table
+			alert.setAlertStatus(0);
 
-		AlertHistory alertHistory = new AlertHistory();
+			acknowledgeService.updateAlert(alert);
 
-		alertHistory = historyService.readAlertHistory(EBUid);
+			
+
+			//update alert end time in "alert_history" table
+
+			AlertHistory alertHistory = new AlertHistory();
+
+			alertHistory = historyService.readAlertHistory(EBUid);
+			
+			alertHistory.setAlertEndGmt(alert.getLastAlertGmt());
 		
-		alertHistory.setAlertEndGmt(alert.getLastAlertGmt());
-	
-		alertHistory.setAlertEndLtz(alert.getLastAlertLtz());
+			alertHistory.setAlertEndLtz(alert.getLastAlertLtz());
 
-		alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
+			alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
 
-		alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
+			alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
 
-		historyService.updateAlertHistory(alertHistory);
+			historyService.updateAlertHistory(alertHistory);
 
+			
+
+			System.out.println(alertHistory.toString());
+
+			
+
+			//return "OK" http status code
+
+			return new ResponseEntity<>(HttpStatus.OK);
+
+		}
 		
-
-		System.out.println(alertHistory.toString());
-
-		
-
-		//return "OK" http status code
-
-		return new ResponseEntity<>(HttpStatus.OK);
+		else {
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+			
+		}
 
 	}
 
