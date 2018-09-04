@@ -44,7 +44,8 @@ function sendEbuInfo() {
     
     function isStore() {
         if (xhttp.readyState === 4) {
-        	if(xhttp.statusCode === 404)
+
+        	if(xhttp.statusCode === 404) {
         		console.log(xhttp.responseText);
                 document.getElementById("null-div").innerHTML = "Invalid store code";
             } else if (xhttp.statusCode === 200){
