@@ -51,7 +51,7 @@ function sendEbuInfo() {
                      Store #${ebuNbr}	`;
                 $("#ebu-input").modal('hide');
 
-                interval = setInterval(getAlerts(), 10000);
+                interval = setInterval(getAlerts, 10000);
             }
         }
         
