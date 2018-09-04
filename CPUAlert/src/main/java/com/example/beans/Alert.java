@@ -1,5 +1,6 @@
 package com.example.beans;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import javax.persistence.Column;
@@ -22,16 +23,16 @@ public class Alert {
    	private int alertStatus;
 
 	@Column(name="last_alert_ts_gmt")
-	private ZonedDateTime lastAlertGmt;
+	private LocalDateTime lastAlertGmt;
    
 	@Column(name="last_alert_ts_ltz")
-	private ZonedDateTime lastAlertLtz;
+	private LocalDateTime lastAlertLtz;
    
     public Alert() {
            super();
     }
 
-	public Alert(EBUid ebuId, int alertType, int alertStatus, ZonedDateTime lastAlertGmt, ZonedDateTime lastAlertLtz) {
+	public Alert(EBUid ebuId, int alertType, int alertStatus, LocalDateTime lastAlertGmt, LocalDateTime lastAlertLtz) {
 		super();
 		this.ebuId = ebuId;
 		this.alertType = alertType;
@@ -64,19 +65,19 @@ public class Alert {
 		this.alertStatus = alertStatus;
 	}
 
-	public ZonedDateTime getLastAlertGmt() {
+	public LocalDateTime getLastAlertGmt() {
 		return lastAlertGmt;
 	}
 
-	public void setLastAlertGmt(ZonedDateTime lastAlertGmt) {
+	public void setLastAlertGmt(LocalDateTime lastAlertGmt) {
 		this.lastAlertGmt = lastAlertGmt;
 	}
 
-	public ZonedDateTime getLastAlertLtz() {
+	public LocalDateTime getLastAlertLtz() {
 		return lastAlertLtz;
 	}
 
-	public void setLastAlertLtz(ZonedDateTime lastAlertLtz) {
+	public void setLastAlertLtz(LocalDateTime lastAlertLtz) {
 		this.lastAlertLtz = lastAlertLtz;
 	}
 
