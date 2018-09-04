@@ -37,7 +37,7 @@ function sendEbuInfo() {
     countryCode = document.getElementById("countryCode").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = isStore;
-    xhttp.open("POST", "ebu/" + countryCode + "/" + ebuNbr, true);
+    xhttp.open("GET", "ebu/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
     
     function isStore() {

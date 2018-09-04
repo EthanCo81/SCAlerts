@@ -16,8 +16,10 @@ public class EBUInfoServiceImpl implements EBUInfoService{
 	@Override
 	public EBUInfo getInfo(String countryCode, int ebuNbr) {
 		EBUid id = new EBUid("US",ebuNbr);
-		EBUInfo info = ebuRepo.findById(id).get();
-		return info;
+		if (ebuRepo.existsById(id)) {
+			return ebuRepo.findById(id).get();
+		}
+		return null;
 	}
 
 }
