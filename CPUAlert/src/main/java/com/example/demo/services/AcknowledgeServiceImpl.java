@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.data.AcknowledgeRepository;
 import com.example.beans.Alert;
 import com.example.beans.EBUid;
+import com.example.demo.data.AlertRepository;
 
 
 /**
@@ -29,7 +29,7 @@ public class AcknowledgeServiceImpl implements AcknowledgeService{
 
 	@Autowired
 
-	private AcknowledgeRepository ad;
+	private AlertRepository ad;
 
 	
 
