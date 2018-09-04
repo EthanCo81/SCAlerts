@@ -7,6 +7,12 @@ import com.example.beans.Alert;
 import com.example.beans.EBUid;
 import com.example.demo.data.AlertRepository;
 
+/**
+ * Implementation for Alert service layer
+ * 
+ * @author Thomas Santillan
+ *
+ */
 @Service
 public class AlertServiceImpl  implements AlertService{
 

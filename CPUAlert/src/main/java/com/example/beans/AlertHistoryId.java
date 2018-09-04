@@ -6,19 +6,33 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * Composite Id for AlertHistory
+ * 
+ * @author Larry Kang
+ *
+ */
 @Embeddable
+@ApiModel(value = "AlertHistoryId", description = "A composite Id for AlertHistory")
 public class AlertHistoryId implements Serializable{
 
 	@Column(name = "country_code")
+	@ApiModelProperty(value ="CountryCode of the store eg. \"US\" ")
 	private String countryCode;
 	
 	@Column(name = "ebu_nbr")
+	@ApiModelProperty(value ="Store location's number")
 	private int ebuNbr;
 	
 	@Column(name = "alert_type_cd")
+	@ApiModelProperty(value ="Type of alert (eg 15 (ExpressOrder))")
 	private int alertType;
 	
 	@Column(name = "alert_start_ts_gmt")
+	@ApiModelProperty(value ="Timestamp in GMT time when the alert was received")
 	private LocalDateTime alertStartGmt;
 
 	public String getCountryCode() {

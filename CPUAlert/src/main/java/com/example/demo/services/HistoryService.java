@@ -12,10 +12,17 @@ import com.example.beans.AlertHistory;
 import com.example.beans.AlertHistoryId;
 import com.example.demo.data.HistoryRepository;
 
+import io.swagger.annotations.ApiModel;
 
 
+/**
+ * Implementation for History service layer
+ * 
+ * @author Larry Kang
+ *
+ */
 @Service
-
+@ApiModel(value = "HistoryService", description = "Implementation for the History service layer")
 public class HistoryService {
 
 
@@ -28,7 +35,12 @@ public class HistoryService {
 
 	
 
-	//create method
+	/**
+	 * Creates a new AlertHistory
+	 * 
+	 * @param alertHistory - The AlertHistory to be created
+	 * @return AlertHistory - The AlertHistory that was created
+	 */
 
 	@Transactional
 
@@ -40,7 +52,12 @@ public class HistoryService {
 
 	
 
-	//read by id method
+	/**
+	 * Retrieves an AlertHistory by Id
+	 * 
+	 * @param alertHistoryId - The ID of the AlertHistory
+	 * @return AlertHistory - The AlertHistory that was retrieved
+	 */
 
 	@Transactional
 
@@ -52,7 +69,11 @@ public class HistoryService {
 
 	
 
-	//read all alerts method
+	/**
+	 * Retrieves all AlertHistories
+	 * 
+	 * @return List<AlertHistor> - A list of all AlertHistories
+	 */
 
 	@Transactional
 
@@ -68,7 +89,11 @@ public class HistoryService {
 
 	
 
-	//update method
+	/**
+	 * Updates an AlertHistory
+	 * 
+	 * @param alertHistory - The AlertHistory to be updated
+	 */
 
 	@Transactional
 
@@ -80,7 +105,11 @@ public class HistoryService {
 
 	
 
-	//delete by id method
+	/**
+	 * Deletes an AlertHistory from database
+	 * 
+	 * @param alertHistoryId - The ID of the AlertHistory to be deleted
+	 */
 
 	@Transactional
 

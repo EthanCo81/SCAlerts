@@ -5,20 +5,34 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * Define EBUInfo (Store information) POJO
+ * 
+ * @author Thomas Santillan
+ *
+ */
 @Entity
 @Table(name="ebu_info")
+@ApiModel (value = "EBUInfo", description = "Define EBUInfo (Store information) POJO")
 public class EBUInfo {
 	
 	@EmbeddedId
+	@ApiModelProperty(value ="The composite Id for EBUInfo consisting of countryCode and ebuNbr")
 	private EBUid ebuId;
 	
 	@Column(name="ebu_city")
+	@ApiModelProperty(value ="The city the store is located in")
 	private String city;
 	
 	@Column(name="ebu_state")
+	@ApiModelProperty(value ="The state (if applicable) the store is located in")
 	private String state;
 	
 	@Column(name="ebu_timezone")
+	@ApiModelProperty(value ="The local timezone of the store")
 	private String timezone;
 	
 	public EBUInfo() {

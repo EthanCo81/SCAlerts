@@ -11,11 +11,25 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.beans.Alert;
 import com.example.demo.services.AlertService;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
+@ApiModel(value = "AlertController", description = "A rest controller to handle HTTP Gets made to /alert/{countryCode}/{ebuNbr}")
 public class AlertController {
 	@Autowired
 	private AlertService alertService;
 	
+	/**
+	 * Retrieves a 1-hour Alert
+	 * @param ebuNbr - Store number
+	 * @param countryCode - The country code e.g. "US"
+	 * @return alert and HTTP status code
+	 */
+	@ApiOperation(value = "Retrieves a 1-hour Alert", response = Alert.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert retrieved") } )
 	@RequestMapping(value = "/alert/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
 	public ResponseEntity<Alert> getAlert(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
 		Alert a = alertService.getAlert(countryCode, ebuNbr);

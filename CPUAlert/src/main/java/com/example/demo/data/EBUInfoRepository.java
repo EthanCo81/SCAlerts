@@ -6,6 +6,12 @@ import org.springframework.stereotype.Repository;
 import com.example.beans.EBUInfo;
 import com.example.beans.EBUid;
 
+/**
+ * DAO repository for EBUInfo utilization
+ * 
+ * @author Thomas Santillan
+ *
+ */
 @Repository
 public interface EBUInfoRepository extends JpaRepository<EBUInfo, EBUid>{
 

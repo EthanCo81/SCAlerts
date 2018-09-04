@@ -7,7 +7,12 @@ import com.example.beans.Alert;
 import com.example.beans.EBUid;
 
 
-
+/**
+ * DAO repository for Acknowledge utilization
+ * 
+ * @author Larry Kang
+ *
+ */
 @Repository
 
 public interface AcknowledgeRepository extends JpaRepository<Alert, EBUid>{

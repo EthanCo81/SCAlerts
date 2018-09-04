@@ -26,7 +26,13 @@ import com.example.demo.services.AlertService;
 import com.example.demo.services.CreateAlertServiceImpl;
 import com.example.demo.services.EBUInfoService;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
+@ApiModel(value = "CreateAlertController", description = "A rest controller to handle HTTP Puts and Posts made to /createAlert/{countryCode}/{ebuNbr}")
 public class CreateAlertController {
 	@Autowired
 	CreateAlertServiceImpl createAlertServiceImpl;
@@ -36,7 +42,17 @@ public class CreateAlertController {
 	
 	@Autowired
 	EBUInfoService ebuInfoService;
-	
+
+	/**
+	 * Creates or updates a new 1-hour Alert
+	 * @param alert - transient alert
+	 * @param ebuNbr - Store number
+	 * @param countryCode - The country code e.g. "US"
+	 * @param timeZone - Optional request string to use a cached timeZone (if exists)
+	 * @return alert and HTTP status code
+	 */
+	@ApiOperation(value = "Adds a new 1-hour Alert", response = Alert.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Created alert returned") } )
 	@PostMapping(value= {"createAlert/{countryCode}/{ebuNbr}"}
 			, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
 			)
@@ -65,6 +81,16 @@ public class CreateAlertController {
 		}
 	}	
 	
+	/**
+	 * Updates a new 1-hour Alert
+	 * @param alert - transient alert
+	 * @param ebuNbr - Store number
+	 * @param countryCode - The country code e.g. "US"
+	 * @param timeZone - Optional request string to use a cached timeZone (if exists)
+	 * @return alert and HTTP status code
+	 */
+	@ApiOperation(value = "Updates a new 1-hour Alert", response = Alert.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Updated alert returned") } )
 	@PutMapping(value= {"createAlert/{countryCode}/{ebuNbr}"} 
 			, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
 			)

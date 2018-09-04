@@ -18,10 +18,15 @@ import com.example.beans.EBUid;
 import com.example.demo.services.AcknowledgeService;
 import com.example.demo.services.HistoryService;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 
 
 @RestController
-
+@ApiModel(value = "AlertController", description = "A rest controller to handle HTTP Posts made to /acknowledge/{countryCode}/{ebuNbr}")
 public class AcknowledgeController {
 
 
@@ -47,7 +52,14 @@ public class AcknowledgeController {
 	}
 
 	
-
+	/**
+	 * Inserts a new Alert History
+	 * @param ebuNbr - Store number
+	 * @param countryCode - The country code e.g. "US"
+	 * @return HTTP status code
+	 */
+	@ApiOperation(value = "Inserts a new Alert History", response = Alert.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert History inserted") } )
 	@RequestMapping(value="/acknowledge/{country_code}/{ebu_nbr}", method=RequestMethod.POST)
 
 	public ResponseEntity<HttpStatus> acknowledgeAlert(@PathVariable("country_code") String countryCode, @PathVariable("ebu_nbr") Integer ebuId){

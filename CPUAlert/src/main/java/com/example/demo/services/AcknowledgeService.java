@@ -9,13 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.data.AcknowledgeRepository;
+
+import io.swagger.annotations.ApiModel;
+
 import com.example.beans.Alert;
 import com.example.beans.EBUid;
 
 
-
+/**
+ * Implementation for Acknowledge service layer
+ * 
+ * @author Larry Kang
+ *
+ */
 @Service
-
+@ApiModel (value = "AcknowledgeService", description = "Implementation for the Acknowledge service layer")
 public class AcknowledgeService {
 
 	
@@ -28,7 +36,12 @@ public class AcknowledgeService {
 
 	
 
-	//create method
+	/**
+	 * Creates a new alert
+	 * 
+	 * @param alert - the Alert to be created
+	 * @return Alert - The new alert that was created
+	 */
 
 	@Transactional
 
@@ -40,7 +53,12 @@ public class AcknowledgeService {
 
 	
 
-	//read by id method
+	/**
+	 * Gets an alert by EBUid
+	 * 
+	 * @param EBUid - The EBUid composed of countryCode and EbuNbr
+	 * @return Alert - the retrieved Alert
+	 */
 
 	public Alert readAlert(EBUid EBUid) {
 
@@ -50,7 +68,11 @@ public class AcknowledgeService {
 
 	
 
-	//read all alerts method
+	/**
+	 * Retrieves a list of alerts
+	 * 
+	 * @return List<Alert> - A list of all alerts
+	 */
 
 	public List<Alert> readAllAlerts(){
 
@@ -64,7 +86,11 @@ public class AcknowledgeService {
 
 	
 
-	//update method
+	/**
+	 * Updates an existing alert
+	 * 
+	 * @param alert - The alert to be updated
+	 */
 
 	@Transactional
 
@@ -76,7 +102,11 @@ public class AcknowledgeService {
 
 	
 
-	//delete by id method
+	/**
+	 * Deletes an alert from the database
+	 * 
+	 * @param EBUid - The composed ID of the alert by countryCode and ebuNbr
+	 */
 
 	@Transactional
 

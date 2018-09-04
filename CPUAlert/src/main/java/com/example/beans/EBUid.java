@@ -5,13 +5,25 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * Composite Id for EBUInfo
+ * 
+ * @author Thomas Santillan
+ *
+ */
+@ApiModel(value = "EBUid", description = "Composite Id for EBUInfo")
 @Embeddable
 public class EBUid implements Serializable{
 	
 	@Column(name = "country_code")
+	@ApiModelProperty(value ="The countryCode for the store eg. \"US\"")
 	private String countryCode;
 	
 	@Column(name = "ebu_nbr")
+	@ApiModelProperty(value ="The store location's number")
 	private int ebuNbr;
 
 	public EBUid() {

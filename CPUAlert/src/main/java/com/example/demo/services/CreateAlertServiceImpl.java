@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import com.example.beans.Alert;
 import com.example.demo.data.AlertRepository;
 
+/**
+ * Implementation for CreateAlert service layer
+ * 
+ * @author Neil Ferman
+ * 
+ */
 @Service
 public class CreateAlertServiceImpl implements CreateAlertService{
 	
