@@ -57,7 +57,6 @@ public class CreateAlertController {
 			String s_timeZone = null;
 			if (timeZone.isPresent()) {
 				s_timeZone = timeZone.get();
-				System.out.println(s_timeZone);
 			}
 			Alert newAlert = setNewAlert(alert, s_timeZone, countryCode, ebuNbr);
 			return new ResponseEntity<>(this.createAlertServiceImpl.createAlert(newAlert), HttpStatus.CREATED);
@@ -77,7 +76,6 @@ public class CreateAlertController {
 		if (oldAlert.getAlertStatus() == 0 && oldAlert.getAlertType() == 15) {
 			String s_timeZone = null;
 			if (timeZone.isPresent()) {
-				System.out.println(timeZone.get());
 				s_timeZone = timeZone.get();
 			}
 			Alert newAlert = setNewAlert(alert, s_timeZone, countryCode, ebuNbr);
@@ -107,17 +105,14 @@ public class CreateAlertController {
 			return zone;
 		} catch (ZoneRulesException e){
 			String storeTimeZone = getEBUTimeZone(countryCode, ebuNbr);
-			System.out.println("Invalid time zone., instead using: " + storeTimeZone);
 			zone = ZoneId.of(storeTimeZone);
 			return zone;
 		} catch (DateTimeException e) {
 			String storeTimeZone = getEBUTimeZone(countryCode, ebuNbr);
-			System.out.println("Invalid time zone format, instead using: " + storeTimeZone);
 			zone = ZoneId.of(storeTimeZone);
 			return zone;
 		} catch (NullPointerException e) {
 			String storeTimeZone = getEBUTimeZone(countryCode, ebuNbr);
-			System.out.println("Null Time Zone, instead using: " + storeTimeZone);
 			zone = ZoneId.of(storeTimeZone);
 			return zone;
 		}
