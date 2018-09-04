@@ -26,7 +26,7 @@ function getAlerts() {
 
 function sendAcknowledge() {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "acknowledge/" + countryCode + "/" + ebuNbr, true);
+    xhttp.open("POST", "acknowledge/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
 
     setInterval(getAlerts, 10000);
@@ -37,7 +37,7 @@ function sendEbuInfo() {
     countryCode = document.getElementById("countryCode").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = isStore;
-    xhttp.open("GET", "ebu/" + countryCode + "/" + ebuNbr, true);
+    xhttp.open("POST", "ebu/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
     
     function isStore() {
@@ -47,8 +47,8 @@ function sendEbuInfo() {
             } else {
                 ebu = JSON.parse(xhttp.responseText);
                 document.getElementById("store-info").innerText =
-                    `${ebu.city}, ${ebu.state}
-                     Store #${ebuNbr}`;
+                    `${ebu.city}, ${ebu.state} \t
+                     Store #${ebuNbr}\t`;
                 $("#ebu-input").modal('hide');
 
                 setInterval(getAlerts(), 10000);

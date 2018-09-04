@@ -1,11 +1,10 @@
 package com.example.beans;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 
@@ -23,16 +22,16 @@ public class Alert {
    	private int alertStatus;
 
 	@Column(name="last_alert_ts_gmt")
-	private Date lastAlertGmt;
+	private LocalDateTime lastAlertGmt;
    
 	@Column(name="last_alert_ts_ltz")
-	private Date lastAlertLtz;
+	private LocalDateTime lastAlertLtz;
    
     public Alert() {
            super();
     }
 
-	public Alert(EBUid ebuId, int alertType, int alertStatus, Date lastAlertGmt, Date lastAlertLtz) {
+	public Alert(EBUid ebuId, int alertType, int alertStatus, LocalDateTime lastAlertGmt, LocalDateTime lastAlertLtz) {
 		super();
 		this.ebuId = ebuId;
 		this.alertType = alertType;
@@ -65,19 +64,19 @@ public class Alert {
 		this.alertStatus = alertStatus;
 	}
 
-	public Date getLastAlertGmt() {
+	public LocalDateTime getLastAlertGmt() {
 		return lastAlertGmt;
 	}
 
-	public void setLastAlertGmt(Date lastAlertGmt) {
+	public void setLastAlertGmt(LocalDateTime lastAlertGmt) {
 		this.lastAlertGmt = lastAlertGmt;
 	}
 
-	public Date getLastAlertLtz() {
+	public LocalDateTime getLastAlertLtz() {
 		return lastAlertLtz;
 	}
 
-	public void setLastAlertLtz(Date lastAlertLtz) {
+	public void setLastAlertLtz(LocalDateTime lastAlertLtz) {
 		this.lastAlertLtz = lastAlertLtz;
 	}
 
