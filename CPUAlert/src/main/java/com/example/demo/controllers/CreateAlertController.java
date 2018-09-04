@@ -58,7 +58,7 @@ public class CreateAlertController {
 			if (timeZone.isPresent()) {
 				s_timeZone = timeZone.get();
 			}
-			Alert newAlert = setNewAlert(alert, s_timeZone, countryCode, ebuNbr);
+			Alert newAlert = setNewAlert(alert, s_timeZone);
 			return new ResponseEntity<>(this.createAlertServiceImpl.createAlert(newAlert), HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<>(this.createAlertServiceImpl.createAlert(oldAlert), HttpStatus.CREATED);
@@ -78,7 +78,7 @@ public class CreateAlertController {
 			if (timeZone.isPresent()) {
 				s_timeZone = timeZone.get();
 			}
-			Alert newAlert = setNewAlert(alert, s_timeZone, countryCode, ebuNbr);
+			Alert newAlert = setNewAlert(alert, s_timeZone);
 			createAlertServiceImpl.updateAlert(newAlert);
 			return new ResponseEntity<>(alert, HttpStatus.OK);
 		} else {
@@ -86,12 +86,12 @@ public class CreateAlertController {
 		}
 	}
 	
-	public Alert setNewAlert(Alert alert, String timeZone, String countryCode, int ebuNbr) {
+	public Alert setNewAlert(Alert alert, String timeZone) {
 		alert.setAlertStatus(1);
 		LocalDateTime currentGmtTime = ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime();
 		alert.setLastAlertGmt(currentGmtTime);
 		
-		ZoneId localTimeZone = validateTimeZone(timeZone, countryCode, ebuNbr);
+		ZoneId localTimeZone = validateTimeZone(timeZone, alert.getEbuId().getCountryCode(), alert.getEbuId().getEbuNbr());
 		LocalDateTime localTime = ZonedDateTime.now(localTimeZone).toLocalDateTime();
 		alert.setLastAlertLtz(localTime);
 		

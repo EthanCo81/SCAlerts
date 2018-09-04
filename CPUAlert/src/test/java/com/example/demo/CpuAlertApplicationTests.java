@@ -64,7 +64,7 @@ public class CpuAlertApplicationTests {
 		a.setLastAlertGmt(null);
 		a.setLastAlertLtz(null);
 		
-		cac.setNewAlert(a, "America/Chicago", "US", 4969);
+		cac.setNewAlert(a, "America/Chicago");
 		
 		assertThat(a.getAlertStatus()).isEqualTo(1);
 		assertThat(a.getLastAlertGmt()).isNotNull();
