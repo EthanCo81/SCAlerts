@@ -47,7 +47,7 @@ public class AcknowledgeController {
 
 	
 
-	@RequestMapping(value="/acknowledge/{country_code}/{ebu_nbr}", method=RequestMethod.PUT)
+	@RequestMapping(value="/acknowledge/{country_code}/{ebu_nbr}", method=RequestMethod.POST)
 
 	public ResponseEntity<HttpStatus> acknowledgeAlert(@PathVariable("country_code") String countryCode, @PathVariable("ebu_nbr") Integer ebuId){
 
@@ -91,7 +91,7 @@ public class AcknowledgeController {
 
 			alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
 
-			historyService.updateAlertHistory(alertHistory);
+			historyService.createAlertHistory(alertHistory);
 			
 			
 
