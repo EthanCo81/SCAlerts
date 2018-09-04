@@ -18,7 +18,7 @@ function getAlerts() {
                     backdrop: 'static',
                     keyboard: false
                 });
-                clearInterval();
+                clearInterval(interval);
             }
         }
     }
@@ -29,7 +29,7 @@ function sendAcknowledge() {
     xhttp.open("POST", "acknowledge/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
 
-    setInterval(getAlerts, 10000);
+    interval = setInterval(getAlerts, 10000);
 }
 
 function sendEbuInfo() {
@@ -37,21 +37,22 @@ function sendEbuInfo() {
     countryCode = document.getElementById("countryCode").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = isStore;
-    xhttp.open("POST", "ebu/" + countryCode + "/" + ebuNbr, true);
+    xhttp.open("GET", "ebu/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
     
     function isStore() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-            if (xhttp.responseText === null) {
+            if (xhttp.responseText.notifyType !== null) {
                 document.getElementById("null-div").innerHTML = "Invalid store code";
             } else {
+            	console.log(xhttp.responseText);
                 ebu = JSON.parse(xhttp.responseText);
                 document.getElementById("store-info").innerText =
-                    `${ebu.city}, ${ebu.state} \t
-                     Store #${ebuNbr}\t`;
+                    `${ebu.city}, ${ebu.state}	
+                     Store #${ebuNbr}	`;
                 $("#ebu-input").modal('hide');
 
-                setInterval(getAlerts(), 10000);
+                interval = setInterval(getAlerts(), 10000);
             }
         }
         
