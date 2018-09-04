@@ -46,7 +46,7 @@ public class AcknowledgeController {
 		//check alert status (to see if alert history needs to be updated)
 		Alert alert = new Alert();
 		alert = acknowledgeService.readAlert(alertIdentity);
-		if (alert.getAlertStatus() == 1) {
+		if (alert.getAlertStatus() == 1 && alert.getAlertType() == 15) {
 			//update alert status in "alert" table
 			alert.setAlertStatus(0);
 			acknowledgeService.updateAlert(alert);
