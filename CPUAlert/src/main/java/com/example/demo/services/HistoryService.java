@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.beans.AlertHistory;
-import com.example.beans.EBUid;
+import com.example.beans.AlertHistoryId;
 import com.example.demo.data.HistoryRepository;
 
 
@@ -44,9 +44,9 @@ public class HistoryService {
 
 	@Transactional
 
-	public AlertHistory readAlertHistory(EBUid EBUid) {
+	public AlertHistory readAlertHistory(AlertHistoryId alertHistoryId) {
 
-		return hd.getOne(EBUid);
+		return hd.getOne(alertHistoryId);
 
 	}
 
@@ -84,9 +84,9 @@ public class HistoryService {
 
 	@Transactional
 
-	public void deleteAlertHistory(EBUid EBUid) {
+	public void deleteAlertHistory(AlertHistoryId alertHistoryId) {
 
-		hd.deleteById(EBUid);
+		hd.deleteById(alertHistoryId);
 
 	}
 

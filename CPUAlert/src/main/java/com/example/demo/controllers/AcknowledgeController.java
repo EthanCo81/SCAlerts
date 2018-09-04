@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
 import com.example.beans.AlertHistory;
+import com.example.beans.AlertHistoryId;
 import com.example.beans.EBUid;
 import com.example.demo.services.AcknowledgeService;
 import com.example.demo.services.HistoryService;
@@ -78,10 +79,20 @@ public class AcknowledgeController {
 			
 
 			//update alert end time in "alert_history" table
+			
+			AlertHistoryId alertHistoryId = new AlertHistoryId();
+			
+			alertHistoryId.setCountryCode(countryCode);
+			
+			alertHistoryId.setEbuNbr(ebuId);
+			
+			alertHistoryId.setAlertType(alert.getAlertType());
+			
+			alertHistoryId.setAlertStartGmt(alert.getLastAlertGmt());
 
 			AlertHistory alertHistory = new AlertHistory();
 
-			alertHistory = historyService.readAlertHistory(EBUid);
+			alertHistory = historyService.readAlertHistory(alertHistoryId);
 			
 			alertHistory.setAlertStartGmt(alert.getLastAlertGmt());
 		
@@ -93,7 +104,7 @@ public class AcknowledgeController {
 
 			historyService.createAlertHistory(alertHistory);
 			
-			
+
 
 			//return "OK" http status code
 
