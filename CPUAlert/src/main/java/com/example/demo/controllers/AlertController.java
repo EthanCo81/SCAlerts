@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
 import com.example.beans.AlertHistory;
+import com.example.beans.AlertType;
 import com.example.beans.EBUInfo;
 import com.example.beans.EBUid;
 import com.example.demo.services.AlertService;
@@ -105,7 +106,7 @@ public class AlertController {
 		} catch (NoSuchElementException e) {
 			oldAlert = new Alert();
 			oldAlert.setAlertStatus(0);
-			oldAlert.setAlertType(alertType);
+			oldAlert.setAlertType(new AlertType(alertType));
 			EBUid ebuID = new EBUid(countryCode, ebuNbr);
 			oldAlert.setEbuId(ebuID);
 		}

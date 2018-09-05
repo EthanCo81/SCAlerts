@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.beans.Alert;
+import com.example.beans.AlertType;
 import com.example.beans.EBUInfo;
 import com.example.beans.EBUid;
 import com.example.demo.controllers.AlertController;
@@ -59,7 +60,7 @@ public class CpuAlertApplicationTests {
 		
 		Alert a = new Alert();
 		a.setAlertStatus(0);
-		a.setAlertType(15);
+		a.setAlertType(new AlertType(15));
 		a.setEbuId(ebuID);
 		a.setLastAlertGmt(null);
 		a.setLastAlertLtz(null);

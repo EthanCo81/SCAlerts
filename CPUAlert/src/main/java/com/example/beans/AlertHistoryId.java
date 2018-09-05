@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,13 +30,27 @@ public class AlertHistoryId implements Serializable{
 	@ApiModelProperty(value ="Store location's number")
 	private int ebuNbr;
 	
-	@Column(name = "alert_type_cd")
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="alert_type_cd")
 	@ApiModelProperty(value ="Type of alert (eg 15 (ExpressOrder))")
-	private int alertType;
+	private AlertType alertType;
 	
 	@Column(name = "alert_start_ts_gmt")
 	@ApiModelProperty(value ="Timestamp in GMT time when the alert was received")
 	private LocalDateTime alertStartGmt;
+
+	public AlertHistoryId() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public AlertHistoryId(String countryCode, int ebuNbr, AlertType alertType, LocalDateTime alertStartGmt) {
+		super();
+		this.countryCode = countryCode;
+		this.ebuNbr = ebuNbr;
+		this.alertType = alertType;
+		this.alertStartGmt = alertStartGmt;
+	}
 
 	public String getCountryCode() {
 		return countryCode;
@@ -51,11 +68,11 @@ public class AlertHistoryId implements Serializable{
 		this.ebuNbr = ebuNbr;
 	}
 
-	public int getAlertType() {
+	public AlertType getAlertType() {
 		return alertType;
 	}
 
-	public void setAlertType(int alertType) {
+	public void setAlertType(AlertType alertType) {
 		this.alertType = alertType;
 	}
 
@@ -72,7 +89,7 @@ public class AlertHistoryId implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((alertStartGmt == null) ? 0 : alertStartGmt.hashCode());
-		result = prime * result + alertType;
+		result = prime * result + ((alertType == null) ? 0 : alertType.hashCode());
 		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
 		result = prime * result + ebuNbr;
 		return result;
@@ -92,7 +109,10 @@ public class AlertHistoryId implements Serializable{
 				return false;
 		} else if (!alertStartGmt.equals(other.alertStartGmt))
 			return false;
-		if (alertType != other.alertType)
+		if (alertType == null) {
+			if (other.alertType != null)
+				return false;
+		} else if (!alertType.equals(other.alertType))
 			return false;
 		if (countryCode == null) {
 			if (other.countryCode != null)
@@ -110,16 +130,6 @@ public class AlertHistoryId implements Serializable{
 				+ ", alertStartGmt=" + alertStartGmt + "]";
 	}
 
-	public AlertHistoryId(String countryCode, int ebuNbr, int alertType, LocalDateTime alertStartGmt) {
-		super();
-		this.countryCode = countryCode;
-		this.ebuNbr = ebuNbr;
-		this.alertType = alertType;
-		this.alertStartGmt = alertStartGmt;
-	}
-
-	public AlertHistoryId() {
-		super();
-	}
+	
 
 }

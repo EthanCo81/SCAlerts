@@ -85,7 +85,7 @@ public class AcknowledgeController {
 
 		alert = acknowledgeService.readAlert(EBUid);
 		
-		if(alert.getAlertStatus() == 1 && alert.getAlertType() == 15) {
+		if(alert.getAlertStatus() == 1 && alert.getAlertType().getAlertTypeCode() == 15) {
 			
 			//update alert status in "alert" table
 
