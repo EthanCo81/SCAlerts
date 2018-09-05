@@ -108,12 +108,19 @@ public class AcknowledgeController {
 			alertHistoryId.setAlertStartGmt(alert.getLastAlertGmt());
 
 			//check if timezone is an input, otherwise pull from ebu_info table 
+			
 			String s_timeZone = null;
+			
 			if (timeZone.isPresent()) {
+				
 				s_timeZone = timeZone.get();
+				
 			}
+			
 			else {
+				
 				s_timeZone = ebuInfoService.getInfo(countryCode, ebuId).getTimezone();
+			
 			}
 			
 			//update alert end time in "alert_history" table
