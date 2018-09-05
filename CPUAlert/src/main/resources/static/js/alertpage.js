@@ -84,7 +84,7 @@ function viewHistory() {
             document.getElementById("ordertable").innerHTML = `<table border="1"><tbody id="history-table"><tr><th>Alert Code</th><th>Alert Start Time</th><th>Alert Acknowledge Time</th></tr></tbody></table>`;
             for (a in historyTable) {
                 document.getElementById("history-table").innerHTML +=
-                    `<tr><td>${historyTable[a].alertHistoryId.alertType}</td>
+                    `<tr><td>${historyTable[a].alertHistoryId.alertType.alertTypeName}</td>
                         <td>${new Date(historyTable[a].alertStartLtz).toLocaleString()}</td>
                         <td>${new Date(historyTable[a].alertEndLtz).toLocaleString()}</td>
                       </tr>
