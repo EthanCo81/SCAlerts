@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
@@ -16,6 +18,7 @@ import com.example.beans.AlertHistory;
 import com.example.beans.AlertHistoryId;
 import com.example.beans.EBUid;
 import com.example.demo.services.AcknowledgeService;
+import com.example.demo.services.EBUInfoService;
 import com.example.demo.services.HistoryService;
 
 import io.swagger.annotations.ApiModel;
@@ -35,11 +38,13 @@ public class AcknowledgeController {
 
 	private AcknowledgeService acknowledgeService;
 
-	
-
 	@Autowired
 
 	private HistoryService historyService;
+	
+	@Autowired
+	
+	private EBUInfoService ebuInfoService;
 
 	
 
@@ -62,9 +67,16 @@ public class AcknowledgeController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert status updated and Alert History inserted") } )
 	@RequestMapping(value="/acknowledge/{country_code}/{ebu_nbr}", method=RequestMethod.POST)
 
-	public ResponseEntity<HttpStatus> acknowledgeAlert(@PathVariable("country_code") String countryCode, @PathVariable("ebu_nbr") Integer ebuId){
+	public ResponseEntity<HttpStatus> acknowledgeAlert(@PathVariable("country_code") String countryCode, @PathVariable("ebu_nbr") Integer ebuId, @RequestParam("timeZone") Optional<String> timeZone){
 
-
+		//check if timezone is an input, otherwise pull from ebu_info table 
+		String s_timeZone = null;
+		if (timeZone.isPresent()) {
+			s_timeZone = timeZone.get();
+		}
+		else {
+			s_timeZone = ebuInfoService.getInfo(countryCode, ebuId).getTimezone();
+		}
 
 		//read alert identity from URL
 
@@ -114,7 +126,7 @@ public class AcknowledgeController {
 
 			alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
 
-			alertHistory.setAlertEndLtz(ZonedDateTime.now().toLocalDateTime());
+			alertHistory.setAlertEndLtz(ZonedDateTime.now(ZoneId.of(s_timeZone)).toLocalDateTime());
 
 			historyService.createAlertHistory(alertHistory);
 			
