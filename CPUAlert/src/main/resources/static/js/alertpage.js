@@ -99,16 +99,9 @@ function viewHistory() {
 
 function createNewAlert() {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "alert/" + countryCode + "/" + ebuNbr, true);
-    var alert = { "ebuId": { "countryCode":null, "ebuNbr":null}, "alertType":null, "alertStatus":null, "lastAlertGmt":null, "lastAlertLtz":null };
-    alert.ebuId.countryCode = countryCode;
-    alert.ebuId.ebuNbr = ebuNbr;
-    alert.alertType = document.getElementById("alertTypeNbr").value;
-    alert.alertStatus = document.getElementById("alertStatus").value;
-    alert.lastAlertGmt = new Date().toISOString().slice(0, 19);
-    alert.lastAlertLtz = new Date().toISOString().slice(0, 19);
-    console.log(JSON.stringify(alert));
-    xhttp.send(JSON.stringify(alert));
+    console.log("alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/?alertType=" + document.getElementById("alertTypeNbr").value);
+    xhttp.open("POST", "alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/?alertType=" + document.getElementById("alertTypeNbr").value, true);
+    xhttp.send();
 }
 
 window.onload = function () {
