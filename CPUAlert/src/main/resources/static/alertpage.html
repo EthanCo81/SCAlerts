@@ -44,6 +44,7 @@
                              alt="Click to input store number" data-toggle="modal" data-target="#ebu-input" />
                     </div>
                     <div id="alert-history"><button class="btn btn-primary btn-lrg" id="alert-history-button">Alert History</button></div>
+                    <div id="create-alert"><button class="btn btn-primary btn-lrg" id="new-alert-modal-button" data-toggle="modal" data-target="#new-alert">Create Alert</button> </div>
                 </div>
 
             </div>
@@ -84,7 +85,7 @@
                         <input type="number" placeholder="EBU Number" name="ebuNbr" id="ebuNbr" />
                         <input list="countryCodes" name="countryCode" placeholder="Country" id="countryCode">
                         <datalist id="countryCodes" name="countryCode">
-                            <option hiddenvalue="US" value="US"></option>
+                            <option value="US"></option>
                         </datalist>
                     <div id="null-div">
 
@@ -98,6 +99,35 @@
             </div>
         </div>
     </div>
+
+
+    <!--Modal for creating a new alert-->
+    <div id="new-alert" class="modal fade modal-sm container-fluid modal-allow-overflow" role="form">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header modal-sm modal-new-alert">
+                    <h5 class="modal-title modal-newalert-title">Create New Alert</h5>
+                </div>
+                <div class="modal-body modal-sm modal-newalert-body">
+                    <input type="number" placeholder="Alert Type Number" name="alertTypeNbr" id="alertTypeNbr" />
+                    <input list="alertStatus" name="alertStatus" placeholder="Alert Status" id="alertStatus">
+                    <datalist id="alertStatus" name="alertStatus">
+                        <option value="0"></option>
+                        <option value="1"></option>
+                    </datalist>
+                    <div id="null-div">
+
+                    </div>
+                </div>
+
+
+                <div class="modal-footer modal-sm modal-newalert-footer">
+                    <button id="new-alert-button" type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 </html>

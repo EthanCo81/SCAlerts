@@ -1,7 +1,7 @@
 #samsbar {
     background: #0B0B3B;
     width: 12%;
-    position: absolute;
+    position: fixed;
     height: 100%;
 }
 
@@ -23,7 +23,8 @@ footer {
     width: 70%;
     left: 21%;
     top: 9%;
-    position: absolute;
+    position: fixed;
+    overflow: hidden auto;
 }
 
 
@@ -106,4 +107,25 @@ footer {
         bottom: 10%;
         
     }
+#create-alert {
+    position: fixed;
+    bottom: 20%;
 }
+
+table {
+	height: 400px;
+    width: 100%;
+}
+
+tbody {
+    display: block;
+    overflow: hidden auto;
+    width: 100%;
+}
+
+th, td, tr {
+    padding: 5px;
+    text-align: center;
+    width:100%;
+}
+
