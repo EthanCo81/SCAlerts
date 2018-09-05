@@ -20,8 +20,8 @@ footer {
 #ordertable {
     position:center;
     height: 67%;
-    width: 70%;
-    left: 21%;
+    width: 45%;
+    left: 34%;
     top: 9%;
     position: fixed;
     overflow: hidden auto;
@@ -126,6 +126,6 @@ tbody {
 th, td, tr {
     padding: 5px;
     text-align: center;
-    width:100%;
+    width:35%;
 }
 
