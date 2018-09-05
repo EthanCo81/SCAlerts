@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.example.beans.Alert;
 import com.example.beans.EBUInfo;
 import com.example.beans.EBUid;
-import com.example.demo.controllers.CreateAlertController;
+import com.example.demo.controllers.AlertController;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,30 +25,30 @@ public class CpuAlertApplicationTests {
 	
 	@Test
 	public void testTimeZoneValidationValidatesTimeZone() {
-		CreateAlertController cac = new CreateAlertController();
+		AlertController ac = new AlertController();
 		ZoneId z = ZoneId.of("America/Chicago");
-		assertThat(z).isEqualTo(cac.validateTimeZone("America/Chicago", "US", 4969));
+		assertThat(z).isEqualTo(ac.validateTimeZone("America/Chicago", "US", 4969));
 	}
 	
 	@Ignore
 	@Test
 	public void testTimeZoneValidationDoesNotValidateTimeZoneInvalidZone() {
-		CreateAlertController cac = new CreateAlertController();
+		AlertController ac = new AlertController();
 		ZoneId z = ZoneId.of("America/Chicago");
-		assertThat(z).isEqualTo(cac.validateTimeZone("Amica/Chicgo", "US", 4969));
+		assertThat(z).isEqualTo(ac.validateTimeZone("Amica/Chicgo", "US", 4969));
 	}
 	
 	@Ignore
 	@Test
 	public void testTimeZoneValidationDoesNotValidateTimeZoneInvalidFormat() {
-		CreateAlertController cac = new CreateAlertController();
+		AlertController ac = new AlertController();
 		ZoneId z = ZoneId.of("America/Chicago");
-		assertThat(z).isEqualTo(cac.validateTimeZone("1155", "US", 4969));
+		assertThat(z).isEqualTo(ac.validateTimeZone("1155", "US", 4969));
 	}
 	
 	@Test
 	public void testAlertIsSetCorrectly() {
-		CreateAlertController cac = new CreateAlertController();
+		AlertController ac = new AlertController();
 		//Alert to be changed
 		EBUid ebuID = new EBUid("US", 4969);
 		EBUInfo ebuInfo = new EBUInfo();
@@ -64,7 +64,7 @@ public class CpuAlertApplicationTests {
 		a.setLastAlertGmt(null);
 		a.setLastAlertLtz(null);
 		
-		cac.setNewAlert(a, "America/Chicago", "US", 4969);
+		ac.setNewAlert(a, "America/Chicago", "US", 4969);
 		
 		assertThat(a.getAlertStatus()).isEqualTo(1);
 		assertThat(a.getLastAlertGmt()).isNotNull();
