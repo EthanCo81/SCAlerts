@@ -24,16 +24,12 @@ public class AlertServiceImpl  implements AlertService{
 	@Override
 	public Alert getAlert(String countryCode, int ebuNbr) {
 		EBUid id = new EBUid(countryCode,ebuNbr);
-		if (alertRepo.existsById(id)) {
-			return alertRepo.findById(id).get();
-		}
-		return null;
+		return alertRepo.findById(id).get();
 	}
 	
 	@Transactional
 	@Override
 	public Alert createAlert(Alert alert) {
-		System.out.println(alert);
 		return alertRepo.saveAndFlush(alert);
 	}
 	

@@ -58,8 +58,12 @@ public class AlertController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert retrieved") } )	
 	@RequestMapping(value = "/alert/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
 	public ResponseEntity<Alert> getAlert(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
-		Alert a = alertService.getAlert(countryCode, ebuNbr);
-		return new ResponseEntity<> (a, HttpStatus.OK);
+		try {
+			Alert a = alertService.getAlert(countryCode, ebuNbr);
+			return new ResponseEntity<> (a, HttpStatus.OK);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	/**
@@ -93,8 +97,9 @@ public class AlertController {
 			, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE
 			)
 	public ResponseEntity<Alert> createAlert(@RequestBody Alert alert, @PathVariable("ebuNbr")int ebuNbr,
-			@PathVariable("countryCode") String countryCode, @RequestParam("timeZone") Optional<String> timeZone){
-			Alert oldAlert = null;
+		@PathVariable("countryCode") String countryCode, @RequestParam("timeZone") Optional<String> timeZone){
+		
+		Alert oldAlert = null;
 		try{
 			oldAlert = alertService.getAlert(countryCode, ebuNbr);
 		} catch (NoSuchElementException e) {
