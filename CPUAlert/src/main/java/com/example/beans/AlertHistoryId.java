@@ -24,7 +24,7 @@ public class AlertHistoryId implements Serializable{
 	private String countryCode;
 	
 	@Column(name = "ebu_nbr")
-	@ApiModelProperty(value ="Store location's number")
+	@ApiModelProperty(value ="Store/club number")
 	private int ebuNbr;
 	
 	@Column(name = "alert_type_cd")

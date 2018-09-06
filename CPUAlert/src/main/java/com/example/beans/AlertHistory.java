@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 
 @Table(name="alert_history")
-@ApiModel(value = "AlertHistory", description = "The History of previous Alerts")
+@ApiModel(value = "AlertHistory", description = "The history of previous Alerts")
 public class AlertHistory {
 
 	

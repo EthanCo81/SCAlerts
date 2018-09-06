@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.beans.Alert;
 import com.example.beans.AlertHistory;
 import com.example.beans.AlertHistoryId;
 
@@ -19,7 +20,6 @@ import io.swagger.annotations.ApiModel;
 @Service
 @ApiModel(value = "HistoryService", description = "Implementation for the History service layer")
 public interface HistoryService {
-	
 
 	/**
 	 * Creates a new AlertHistory
@@ -29,8 +29,6 @@ public interface HistoryService {
 	 */
 	public AlertHistory createAlertHistory(AlertHistory alertHistory);
 
-	
-
 	/**
 	 * Retrieves an AlertHistory by Id
 	 * 
@@ -39,27 +37,19 @@ public interface HistoryService {
 	 */
 	public AlertHistory readAlertHistory(AlertHistoryId alertHistoryId);
 
-	
-
 	/**
 	 * Retrieves all AlertHistories
 	 * 
 	 * @return List<AlertHistor> - A list of all AlertHistories
 	 */
-
 	public List<AlertHistory> getAllHistories(String countryCode, int ebuNbr);
-
-	
 
 	/**
 	 * Updates an AlertHistory
 	 * 
 	 * @param alertHistory - The AlertHistory to be updated
 	 */
-
 	public void updateAlertHistory(AlertHistory alertHistory);
-
-	
 
 	/**
 	 * Deletes an AlertHistory from database
@@ -68,4 +58,13 @@ public interface HistoryService {
 	 */
 	public void deleteAlertHistory(AlertHistoryId alertHistoryId);
 
+	/**
+	 * Gets an AlertHistoryId from a given countryCode, ebuNbr, and Alert
+	 * 
+	 * @param countryCode - a String representing a country 
+	 * @param ebuNbr - the store/club number of an EBU in a specific country
+	 * @param alert - the last triggered alert which will be used to timestamp alertStart
+	 * @return AlertHistoryId - the composite ID of an AlertHistory
+	 */
+	public AlertHistoryId getAlertHistoryId(String countryCode, int ebuNbr, Alert alert);
 }
