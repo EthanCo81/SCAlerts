@@ -1,7 +1,7 @@
 package com.example.demo.services;
 
 import java.time.DateTimeException;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.zone.ZoneRulesException;
@@ -12,8 +12,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.beans.Alert;
@@ -94,12 +92,10 @@ public class AlertServiceImpl  implements AlertService{
 	
 	public Alert setNewAlert(Alert alert, String timeZone, String countryCode, int ebuNbr) {
 		alert.setAlertStatus(1);
-		LocalDateTime currentGmtTime = ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime();
-		alert.setLastAlertGmt(currentGmtTime);
-		
+				
 		ZoneId localTimeZone = validateTimeZone(timeZone, countryCode, ebuNbr);
-		LocalDateTime localTime = ZonedDateTime.now(localTimeZone).toLocalDateTime();
-		alert.setLastAlertLtz(localTime);
+		OffsetDateTime localTime = ZonedDateTime.now(localTimeZone).toOffsetDateTime();
+		alert.setLastAlertTime(localTime);
 		
 		return alert;
 	}
