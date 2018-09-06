@@ -1,10 +1,5 @@
 package com.example.demo.controllers;
 
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.zone.ZoneRulesException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -23,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
 import com.example.beans.AlertHistory;
-import com.example.beans.EBUInfo;
-import com.example.beans.EBUid;
 import com.example.demo.services.AlertService;
 import com.example.demo.services.EBUInfoService;
 import com.example.demo.services.HistoryService;
@@ -99,15 +92,12 @@ public class AlertController {
 		@PathVariable("countryCode") String countryCode, @RequestParam("timeZone") Optional<String> timeZone
 		, @RequestParam("alertType") int alertType){
 		
+		//Lookup the Alert by countryCode and ebuNbr. If no Alert exists for that store, create a new Alert.
 		Alert oldAlert = null;
 		try{
 			oldAlert = alertService.getAlert(countryCode, ebuNbr);
 		} catch (NoSuchElementException e) {
-			oldAlert = new Alert();
-			oldAlert.setAlertStatus(0);
-			oldAlert.setAlertType(alertType);
-			EBUid ebuID = new EBUid(countryCode, ebuNbr);
-			oldAlert.setEbuId(ebuID);
+			oldAlert = alertService.setOldAlert(countryCode, ebuNbr, alertType);
 		}
 		//Check that the alert flag is not already raised AND that it's a new Express Order alert
 		if (oldAlert.getAlertStatus() == 0 && alertType == 15) {
@@ -115,7 +105,7 @@ public class AlertController {
 			if (timeZone.isPresent()) {
 				s_timeZone = timeZone.get();
 			}
-			Alert newAlert = setNewAlert(oldAlert, s_timeZone, countryCode, ebuNbr);
+			Alert newAlert = alertService.setNewAlert(oldAlert, s_timeZone, countryCode, ebuNbr);
 			return new ResponseEntity<>(this.alertService.createAlert(newAlert), HttpStatus.CREATED);
 		} else {
 			return new ResponseEntity<>(this.alertService.createAlert(oldAlert), HttpStatus.CREATED);
@@ -137,7 +127,13 @@ public class AlertController {
 			)
 	public ResponseEntity<Alert> updateAlert(@PathVariable("ebuNbr")int ebuNbr,	@PathVariable("countryCode") String countryCode
 			, @RequestParam("timeZone") Optional<String> timeZone, @RequestParam("alertType") int alertType){
-		Alert oldAlert = alertService.getAlert(countryCode, ebuNbr);
+		
+		Alert oldAlert;
+		try {
+			oldAlert = alertService.getAlert(countryCode, ebuNbr);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		}
 		
 		//Check that the alert flag is not already raised AND that it's a new Express Order alert
 		if (oldAlert.getAlertStatus() == 0 && alertType == 15) {
@@ -145,7 +141,7 @@ public class AlertController {
 			if (timeZone.isPresent()) {
 				s_timeZone = timeZone.get();
 			}
-			Alert newAlert = setNewAlert(oldAlert, s_timeZone, countryCode, ebuNbr);
+			Alert newAlert = alertService.setNewAlert(oldAlert, s_timeZone, countryCode, ebuNbr);
 			alertService.updateAlert(newAlert);
 			return new ResponseEntity<>(newAlert, HttpStatus.OK);
 		} else {
@@ -153,41 +149,5 @@ public class AlertController {
 		}
 	}
 	
-	public Alert setNewAlert(Alert alert, String timeZone, String countryCode, int ebuNbr) {
-		alert.setAlertStatus(1);
-		LocalDateTime currentGmtTime = ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime();
-		alert.setLastAlertGmt(currentGmtTime);
-		
-		ZoneId localTimeZone = validateTimeZone(timeZone, countryCode, ebuNbr);
-		LocalDateTime localTime = ZonedDateTime.now(localTimeZone).toLocalDateTime();
-		alert.setLastAlertLtz(localTime);
-		
-		return alert;
-	}
 	
-	public ZoneId validateTimeZone (String timeZone, String countryCode, int ebuNbr) {
-		ZoneId zone;
-		try {
-			zone = ZoneId.of(timeZone);
-			return zone;
-		} catch (ZoneRulesException e){
-			String storeTimeZone = getEBUTimeZone(countryCode, ebuNbr);
-			zone = ZoneId.of(storeTimeZone);
-			return zone;
-		} catch (DateTimeException e) {
-			String storeTimeZone = getEBUTimeZone(countryCode, ebuNbr);
-			zone = ZoneId.of(storeTimeZone);
-			return zone;
-		} catch (NullPointerException e) {
-			String storeTimeZone = getEBUTimeZone(countryCode, ebuNbr);
-			zone = ZoneId.of(storeTimeZone);
-			return zone;
-		}
-	}
-
-	private String getEBUTimeZone(String countryCode, int ebuNbr) {
-		EBUInfo ebuInfo = ebuInfoService.getInfo(countryCode, ebuNbr);
-		String storeTimeZone = ebuInfo.getTimezone();
-		return storeTimeZone;
-	}
 }

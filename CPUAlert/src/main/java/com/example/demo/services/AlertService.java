@@ -16,8 +16,8 @@ public interface AlertService {
 	/**
 	 * Gets alert for a given EBU if one exists
 	 * 
-	 * @param ebuNbr - the store location's number
-	 * @return Alert - the retrieved Alert
+	 * @param ebuNbr - The store location's number
+	 * @return Alert - The retrieved Alert
 	 */
 	public Alert getAlert(String countryCode, int ebuNbr);
 	
@@ -33,4 +33,26 @@ public interface AlertService {
 	 * @param alert - The Alert to be updated
 	 */
 	public void updateAlert(Alert alert);
+	
+	/**
+	 * Changes the Alert flag from 0 to 1, and timestamps the alert
+	 * 
+	 * @param oldAlert - The Alert to be changed
+	 * @param s_timeZone - The time zone sent from the cache of the web service
+	 * @param countryCode - The 2 letter code for the country e.g. "US"
+	 * @param ebuNbr - The store location's number
+	 * @return - the modified Alert
+	 */
+	public Alert setNewAlert(Alert oldAlert, String s_timeZone, String countryCode, int ebuNbr);
+	
+	/**
+	 * If no alert is found in the system but the ebuNbr is valid,
+	 * create a new alert to put into the system
+	 * 
+	 * @param countryCode - The 2 letter code for the country e.g. "US"
+	 * @param ebuNbr - The store location's number
+	 * @param alertType - The code number for the type of alert e.g. 15 (Express Order)
+	 * @return - the newly created alert
+	 */
+	public Alert setOldAlert(String countryCode, int ebuNbr, int alertType);
 }

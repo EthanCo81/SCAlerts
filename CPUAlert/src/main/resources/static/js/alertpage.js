@@ -51,7 +51,7 @@ function sendEbuInfo() {
                     `${ebu.city}, ${ebu.state}	
                      Store #${ebuNbr}	`;
                 $("#ebu-input").modal('hide');
-
+                getAlerts();
                 interval = setInterval(getAlerts, 10000);
             }
         }
@@ -81,10 +81,10 @@ function viewHistory() {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             var historyTable = JSON.parse(xhttp.responseText);
             console.log(historyTable);
-            document.getElementById("ordertable").innerHTML = `<table id="history-table" border="1"><tr><td>Alert Code</td><td>Alert Start Time</td><td>Alert Acknowledge Time</td></tr></table>`;
+            document.getElementById("ordertable").innerHTML = `<table border="1"><tbody id="history-table"><tr><th>Alert Code</th><th>Alert Start Time</th><th>Alert Acknowledge Time</th></tr></tbody></table>`;
             for (a in historyTable) {
                 document.getElementById("history-table").innerHTML +=
-                    `<tr><td>${historyTable[a].alertHistoryId.alertType}</td>
+                    `<tr><td>${historyTable[a].alertHistoryId.alertType.alertTypeName}</td>
                         <td>${new Date(historyTable[a].alertStartLtz).toLocaleString()}</td>
                         <td>${new Date(historyTable[a].alertEndLtz).toLocaleString()}</td>
                       </tr>
@@ -92,14 +92,23 @@ function viewHistory() {
                 
                 document.getElementById("history-table").innerHTML += `</tr>`;
             }
+
         }
     }
+}
+
+function createNewAlert() {
+    var xhttp = new XMLHttpRequest();
+    console.log("alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/?alertType=" + document.getElementById("alertTypeNbr").value);
+    xhttp.open("POST", "alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/?alertType=" + document.getElementById("alertTypeNbr").value, true);
+    xhttp.send();
 }
 
 window.onload = function () {
     document.getElementById("acknowledge-button").addEventListener("click", sendAcknowledge);
     document.getElementById("ebu-button").addEventListener("click", sendEbuInfo);
     document.getElementById("alert-history-button").addEventListener("click", viewHistory);
+    document.getElementById("new-alert-button").addEventListener("click", createNewAlert);
     time = setInterval(checkTime, 1000);
 };
 

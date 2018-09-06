@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModel;
@@ -27,8 +30,9 @@ public class Alert {
 	private EBUid ebuId;
 	
 	@ApiModelProperty(value = "The type of alert (Pick Due(10), Express Order(15), Check-In(20), etc.)")
-	@Column(name="alert_type_cd")
-   	private int alertType;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="alert_type_cd")
+   	private AlertType alertType;
 	
 	@ApiModelProperty(value ="The status of the alert (None(0), Active(1))")
 	@Column(name="alert_status_cd")
@@ -46,7 +50,8 @@ public class Alert {
            super();
     }
 
-	public Alert(EBUid ebuId, int alertType, int alertStatus, LocalDateTime lastAlertGmt, LocalDateTime lastAlertLtz) {
+	public Alert(EBUid ebuId, AlertType alertType, int alertStatus, LocalDateTime lastAlertGmt,
+			LocalDateTime lastAlertLtz) {
 		super();
 		this.ebuId = ebuId;
 		this.alertType = alertType;
@@ -63,11 +68,11 @@ public class Alert {
 		this.ebuId = ebuId;
 	}
 
-	public int getAlertType() {
+	public AlertType getAlertType() {
 		return alertType;
 	}
 
-	public void setAlertType(int alertType) {
+	public void setAlertType(AlertType alertType) {
 		this.alertType = alertType;
 	}
 
@@ -100,7 +105,7 @@ public class Alert {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + alertStatus;
-		result = prime * result + alertType;
+		result = prime * result + ((alertType == null) ? 0 : alertType.hashCode());
 		result = prime * result + ((ebuId == null) ? 0 : ebuId.hashCode());
 		result = prime * result + ((lastAlertGmt == null) ? 0 : lastAlertGmt.hashCode());
 		result = prime * result + ((lastAlertLtz == null) ? 0 : lastAlertLtz.hashCode());
@@ -118,7 +123,10 @@ public class Alert {
 		Alert other = (Alert) obj;
 		if (alertStatus != other.alertStatus)
 			return false;
-		if (alertType != other.alertType)
+		if (alertType == null) {
+			if (other.alertType != null)
+				return false;
+		} else if (!alertType.equals(other.alertType))
 			return false;
 		if (ebuId == null) {
 			if (other.ebuId != null)
@@ -143,5 +151,6 @@ public class Alert {
 		return "Alert [ebuId=" + ebuId + ", alertType=" + alertType + ", alertStatus=" + alertStatus + ", lastAlertGmt="
 				+ lastAlertGmt + ", lastAlertLtz=" + lastAlertLtz + "]";
 	}
+
        
 }

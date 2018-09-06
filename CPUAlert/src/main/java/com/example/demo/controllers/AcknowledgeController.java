@@ -66,8 +66,12 @@ public class AcknowledgeController {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 		
+<<<<<<< HEAD
 		//if alert status is 1, update alert status in "alert" table
 		if(alert.getAlertStatus() == 1 && alert.getAlertType() == 15) {
+=======
+		if(alert.getAlertStatus() == 1 && alert.getAlertType().getAlertTypeCode() == 15) {
+>>>>>>> 41c1c30de684e5a7673b5ab9fd38dedcdcd222f8
 			
 			//update alert status to 0
 			alert.setAlertStatus(0);
