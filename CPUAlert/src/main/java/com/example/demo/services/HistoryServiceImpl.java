@@ -1,6 +1,9 @@
 package com.example.demo.services;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -26,6 +29,10 @@ public class HistoryServiceImpl implements HistoryService{
 	//wiring in Repository for persistence methods
 	@Autowired
 	private HistoryRepository hd;
+	
+	//wiring in ebuInfoService for timeZone methods
+	@Autowired
+	private EBUInfoService ebuInfoService;
 	
 	//create method
 	@Transactional
@@ -65,7 +72,28 @@ public class HistoryServiceImpl implements HistoryService{
 		alertHistoryId.setCountryCode(countryCode);
 		alertHistoryId.setEbuNbr(ebuNbr);
 		alertHistoryId.setAlertType(alert.getAlertType());
-		alertHistoryId.setAlertStartGmt(alert.getLastAlertGmt());
+		alertHistoryId.setAlertStartTime(alert.getLastAlertTime());
 		return alertHistoryId;
+	}
+	
+	//configureAndInsert alertHistory method for setting fields and inserting into DB
+	public void configureAndInsertAlertHistory(Alert alert, AlertHistoryId alertHistoryId, Optional<String> timeZone, String countryCode, int ebuNbr) {
+		
+		//check if timezone is an input, otherwise pull from ebu_info table in DB
+		String s_timeZone = null;
+		if (timeZone.isPresent()) {
+			s_timeZone = timeZone.get();
+		}
+		else {	
+			s_timeZone = ebuInfoService.getInfo(countryCode, ebuNbr).getTimezone();
+		}
+		
+		//set alertHistory fields
+		AlertHistory alertHistory = new AlertHistory();
+		alertHistory.setAlertHistoryId(alertHistoryId);
+		alertHistory.setAlertEndTime(ZonedDateTime.now(ZoneId.of(s_timeZone)).toOffsetDateTime());
+		
+		//create new alertHistory 
+		createAlertHistory(alertHistory);
 	}
 }
