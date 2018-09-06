@@ -48,6 +48,12 @@ public interface AlertService {
 	public Alert updateAlert(Alert alert, String countryCode, int ebuNbr, Optional<String> timeZone, int alertType);
 	
 	/**
+	 * sets alert status to 0 and persists to DB
+	 * 
+	 * @param a -alert updated
+	 */
+	public void acknowledgeAlert(Alert a);
+	/**
 	 * Changes the Alert flag from 0 to 1, and timestamps the alert
 	 * 
 	 * @param oldAlert - The Alert to be changed

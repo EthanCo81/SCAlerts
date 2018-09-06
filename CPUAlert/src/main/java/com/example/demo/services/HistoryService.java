@@ -77,5 +77,5 @@ public interface HistoryService {
 	 * @param countryCode - a String representing a country
 	 * @param ebuNbr - the store/club number of an EBU in a specific country
 	 */
-	public void configureAndInsertAlertHistory(Alert alert, AlertHistoryId alertHistoryId, Optional<String> timeZone, String countryCode, int ebuNbr);
+	public void configureAndInsertAlertHistory(Alert alert, Optional<String> timeZone, String countryCode, int ebuNbr);
 }

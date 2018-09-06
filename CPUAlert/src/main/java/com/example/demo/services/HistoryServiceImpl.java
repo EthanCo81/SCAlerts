@@ -77,8 +77,9 @@ public class HistoryServiceImpl implements HistoryService{
 	}
 	
 	//configureAndInsert alertHistory method for setting fields and inserting into DB
-	public void configureAndInsertAlertHistory(Alert alert, AlertHistoryId alertHistoryId, Optional<String> timeZone, String countryCode, int ebuNbr) {
-		
+	@Transactional
+	public void configureAndInsertAlertHistory(Alert alert, Optional<String> timeZone, String countryCode, int ebuNbr) {
+		AlertHistoryId alertHistoryId = getAlertHistoryId(countryCode, ebuNbr, alert);
 		//check if timezone is an input, otherwise pull from ebu_info table in DB
 		String s_timeZone = null;
 		if (timeZone.isPresent()) {
@@ -94,6 +95,6 @@ public class HistoryServiceImpl implements HistoryService{
 		alertHistory.setAlertEndTime(ZonedDateTime.now(ZoneId.of(s_timeZone)).toOffsetDateTime());
 		
 		//create new alertHistory 
-		createAlertHistory(alertHistory);
+		hd.save(alertHistory);
 	}
 }

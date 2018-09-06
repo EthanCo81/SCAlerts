@@ -22,6 +22,11 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "AlertHistoryId", description = "A composite Id for AlertHistory")
 public class AlertHistoryId implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "country_code")
 	@ApiModelProperty(value ="CountryCode of the store eg. \"US\" ")
 	private String countryCode;

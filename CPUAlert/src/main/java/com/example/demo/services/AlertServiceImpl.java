@@ -37,8 +37,13 @@ public class AlertServiceImpl  implements AlertService{
 	
 	@Override
 	public Alert getAlert(String countryCode, int ebuNbr) {
-		EBUid id = new EBUid(countryCode,ebuNbr);
-		return alertRepo.findById(id).get();
+		try {
+			EBUid id = new EBUid(countryCode,ebuNbr);
+			return alertRepo.findById(id).get();
+		}catch(NoSuchElementException e) {
+			return null;
+		}
+
 	}
 	
 	@Override
@@ -88,6 +93,12 @@ public class AlertServiceImpl  implements AlertService{
 		} else {
 			return alert;
 		}
+	}
+	
+	@Transactional
+	public void acknowledgeAlert(Alert a) {
+		a.setAlertStatus(0);
+		alertRepo.save(a);
 	}
 	
 	public Alert setNewAlert(Alert alert, String timeZone, String countryCode, int ebuNbr) {

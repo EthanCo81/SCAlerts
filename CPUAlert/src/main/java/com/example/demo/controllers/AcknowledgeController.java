@@ -1,8 +1,5 @@
 package com.example.demo.controllers;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
-import com.example.beans.AlertHistory;
-import com.example.beans.AlertHistoryId;
-import com.example.beans.EBUid;
-import com.example.demo.services.AcknowledgeService;
-import com.example.demo.services.EBUInfoService;
+import com.example.demo.services.AlertService;
 import com.example.demo.services.HistoryService;
 
 import io.swagger.annotations.ApiModel;
@@ -33,8 +26,7 @@ import io.swagger.annotations.ApiResponses;
 @ApiModel(value = "AlertController", description = "A rest controller to handle HTTP Posts made to /acknowledge/{countryCode}/{ebuNbr}")
 public class AcknowledgeController {
 
-	@Autowired
-	private AcknowledgeService acknowledgeService;
+	@Autowired AlertService alertService;
 
 	@Autowired
 	private HistoryService historyService;
@@ -50,44 +42,10 @@ public class AcknowledgeController {
 	@RequestMapping(value="/acknowledge/{country_code}/{ebu_nbr}", method=RequestMethod.POST)
 
 	public ResponseEntity<HttpStatus> acknowledgeAlert(@PathVariable("country_code") String countryCode, @PathVariable("ebu_nbr") Integer ebuNbr, @RequestParam("timeZone") Optional<String> timeZone){
-
-		//get ebuId from URL
-		EBUid ebuId = new EBUid();
-		ebuId = acknowledgeService.getEbuId(countryCode, ebuNbr);
-
-		//read alert from URL and validate inputs
-		Alert alert = new Alert();
-		try {
-			alert = acknowledgeService.readAlert(ebuId);
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
-		
-		//if alert status is 1, update alert status in "alert" table
-		if(alert.getAlertStatus() == 1 && alert.getAlertType().getAlertTypeCode() == 15) {
-			
-			//update alert status to 0
-			alert.setAlertStatus(0);
-			acknowledgeService.updateAlert(alert);
-			
-			//get alert history id from the URL & latest alert, and also validate inputs
-			AlertHistoryId alertHistoryId = new AlertHistoryId();
-			try {
-				alertHistoryId = historyService.getAlertHistoryId(countryCode, ebuNbr, alert);
-			} catch(NoSuchElementException e) {
-				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-			}
-			
-			//configure and insert alert history into "alert_history" table
-			historyService.configureAndInsertAlertHistory(alert, alertHistoryId, timeZone, countryCode, ebuNbr);
-			
-			//return "OK" http status code
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		
-		//otherwise no alert is active, so do nothing and return OK status
-		else {	
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
+		Alert alert = alertService.getAlert(countryCode, ebuNbr);
+		if(alert == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		alertService.acknowledgeAlert(alert);
+		historyService.configureAndInsertAlertHistory(alert, timeZone, countryCode, ebuNbr);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

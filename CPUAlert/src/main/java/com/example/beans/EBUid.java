@@ -18,6 +18,11 @@ import io.swagger.annotations.ApiModelProperty;
 @Embeddable
 public class EBUid implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7445005388789236539L;
+
 	@Column(name = "country_code")
 	@ApiModelProperty(value ="The countryCode for the store eg. \"US\"")
 	private String countryCode;

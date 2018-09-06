@@ -1,7 +1,5 @@
 package com.example.demo.controllers;
 
-import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,12 +34,8 @@ public class EBUController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "EBUInfo retrieved") } )
 	@RequestMapping(value = "/ebu/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
 	public ResponseEntity<EBUInfo> getInfo(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
-		try {
 			EBUInfo info = ebuService.getInfo(countryCode, ebuNbr);
-			return new ResponseEntity<> (info, HttpStatus.OK);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
-		}
+			return new ResponseEntity<> (info, info == null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
 	}
 
 }

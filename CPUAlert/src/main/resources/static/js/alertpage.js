@@ -101,8 +101,8 @@ function viewHistory() {
             for (a in historyTable) {
                 document.getElementById("history-table").innerHTML +=
                     `<tr><td>${historyTable[a].alertHistoryId.alertType.alertTypeName}</td>
-                        <td>${new Date(historyTable[a].alertStartLtz).toLocaleString()}</td>
-                        <td>${new Date(historyTable[a].alertEndLtz).toLocaleString()}</td>
+                        <td>${new Date(historyTable[a].alertHistoryId.alertStartTime).toLocaleString()}</td>
+                        <td>${new Date(historyTable[a].alertEndTime).toLocaleString()}</td>
                       </tr>
                     `;
                 
@@ -115,7 +115,7 @@ function viewHistory() {
 
 function createNewAlert() {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/timeZone=" + Intl.DateTimeFormat().resolvedOptions().timeZone + "&?alertType=" + document.getElementById("alertTypeNbr").value, true);
+    xhttp.open("POST", "alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/?timeZone=" + Intl.DateTimeFormat().resolvedOptions().timeZone + "&alertType=" + document.getElementById("alertTypeNbr").value, true);
     xhttp.send();
 }
 

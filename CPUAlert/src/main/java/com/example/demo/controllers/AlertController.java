@@ -1,7 +1,6 @@
 package com.example.demo.controllers;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +53,9 @@ public class AlertController {
 			@PathVariable("countryCode") String countryCode,
 			@PathVariable("ebuNbr") int ebuNbr
 	){
-		try {
 			Alert a = alertService.getAlert(countryCode, ebuNbr);
-			return new ResponseEntity<> (a, HttpStatus.OK);
-		} catch(NoSuchElementException e) {
-			return new ResponseEntity<> (null, HttpStatus.NOT_FOUND);
-		}
+			return new ResponseEntity<> (a, a==null ? HttpStatus.NOT_FOUND : HttpStatus.OK);
+
 	}
 	
 	/**
@@ -126,12 +122,8 @@ public class AlertController {
 	){
 		//Lookup the Alert by countryCode and ebuNbr. If no Alert exists for that store, return error.
 		Alert alert = alertService.updateAlert(new Alert(), countryCode, ebuNbr, timeZone, alertType);
+		return new ResponseEntity<>(alert, alert==null ? HttpStatus.NOT_FOUND:HttpStatus.OK);
 		
-		if (alert != null) {
-			return new ResponseEntity<>(alert, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
 	}
 	
 	
