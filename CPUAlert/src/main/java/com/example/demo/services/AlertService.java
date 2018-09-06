@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.beans.Alert;
 
@@ -34,13 +35,17 @@ public interface AlertService {
 	 * @param alert - The Alert to be created
 	 * @return The created Alert.
 	 */
-	public Alert createAlert(Alert alert);
+	public Alert createAlert(Alert alert, String countryCode, int ebuNbr, Optional<String> timeZone, int alertType);
 	
 	/**
 	 * 
 	 * @param alert - The Alert to be updated
+	 * @param countryCode - The 2 letter code for the country e.g. "US"
+	 * @param ebuNbr - The store location's number
+	 * @param timeZone - The time zone sent from the cache of the web service
+	 * @param alertType The code number for the type of alert e.g. 15 (Express Order)
 	 */
-	public void updateAlert(Alert alert);
+	public Alert updateAlert(Alert alert, String countryCode, int ebuNbr, Optional<String> timeZone, int alertType);
 	
 	/**
 	 * Changes the Alert flag from 0 to 1, and timestamps the alert

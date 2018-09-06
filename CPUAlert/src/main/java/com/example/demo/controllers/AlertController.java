@@ -94,32 +94,16 @@ public class AlertController {
 	@ApiOperation(value = "Adds a new 1-hour Alert", response = Alert.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Created alert returned") } )
 	@PostMapping(value= {"alert/{countryCode}/{ebuNbr}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Alert> createAlert(
-		
+	
+	public ResponseEntity<Alert> createAlert(		
 			@PathVariable("ebuNbr")int ebuNbr,
 			@PathVariable("countryCode") String countryCode,
 			@RequestParam("timeZone") Optional<String> timeZone,
 			@RequestParam("alertType") int alertType
 	){
-		
 		//Lookup the Alert by countryCode and ebuNbr. If no Alert exists for that store, create a new Alert.
-		Alert oldAlert = null;
-		try{
-			oldAlert = alertService.getAlert(countryCode, ebuNbr);
-		} catch (NoSuchElementException e) {
-			oldAlert = alertService.setOldAlert(countryCode, ebuNbr, alertType);
-		}
-		//Check that the alert flag is not already raised AND that it's a new Express Order alert
-		if (oldAlert.getAlertStatus() == 0 && alertType == 15) {
-			String s_timeZone = null;
-			if (timeZone.isPresent()) {
-				s_timeZone = timeZone.get();
-			}
-			Alert newAlert = alertService.setNewAlert(oldAlert, s_timeZone, countryCode, ebuNbr);
-			return new ResponseEntity<>(this.alertService.createAlert(newAlert), HttpStatus.CREATED);
-		} else {
-			return new ResponseEntity<>(this.alertService.createAlert(oldAlert), HttpStatus.CREATED);
-		}
+		Alert alert = alertService.createAlert(new Alert(), countryCode, ebuNbr, timeZone, alertType);
+		return new ResponseEntity<>(alert, HttpStatus.CREATED);		
 	}	
 	
 	/**
@@ -133,32 +117,20 @@ public class AlertController {
 	@ApiOperation(value = "Updates a new 1-hour Alert", response = Alert.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert updated and returned") } )
 	@PutMapping(value= {"alert/{countryCode}/{ebuNbr}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Alert> updateAlert(
-		
+	
+	public ResponseEntity<Alert> updateAlert(		
 			@PathVariable("ebuNbr")int ebuNbr,
 			@PathVariable("countryCode") String countryCode,
 			@RequestParam("timeZone") Optional<String> timeZone,
 			@RequestParam("alertType") int alertType
 	){
+		//Lookup the Alert by countryCode and ebuNbr. If no Alert exists for that store, return error.
+		Alert alert = alertService.updateAlert(new Alert(), countryCode, ebuNbr, timeZone, alertType);
 		
-		Alert oldAlert;
-		try {
-			oldAlert = alertService.getAlert(countryCode, ebuNbr);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
-		
-		//Check that the alert flag is not already raised AND that it's a new Express Order alert
-		if (oldAlert.getAlertStatus() == 0 && alertType == 15) {
-			String s_timeZone = null;
-			if (timeZone.isPresent()) {
-				s_timeZone = timeZone.get();
-			}
-			Alert newAlert = alertService.setNewAlert(oldAlert, s_timeZone, countryCode, ebuNbr);
-			alertService.updateAlert(newAlert);
-			return new ResponseEntity<>(newAlert, HttpStatus.OK);
+		if (alert != null) {
+			return new ResponseEntity<>(alert, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>(oldAlert, HttpStatus.OK);
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 	}
 	

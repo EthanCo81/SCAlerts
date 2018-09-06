@@ -20,7 +20,7 @@ import com.example.beans.AlertHistoryId;
 
 public interface HistoryRepository extends JpaRepository<AlertHistory, AlertHistoryId>{
 	  
-	  public List<AlertHistory> findByAlertHistoryId_CountryCodeAndAlertHistoryId_EbuNbrOrderByAlertStartLtzDesc(String countyCode, int ebuNbr);
+	  public List<AlertHistory> findByAlertHistoryId_CountryCodeAndAlertHistoryId_EbuNbrOrderByAlertEndTimeDesc(String countyCode, int ebuNbr);
 
 }
 

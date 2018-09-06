@@ -38,10 +38,7 @@ public class AcknowledgeController {
 
 	@Autowired
 	private HistoryService historyService;
-	
-	@Autowired
-	private EBUInfoService ebuInfoService;
-	
+		
 	/**
 	 * Acknowledges an Alert by updating the alert status and inserts a new Alert History
 	 * @param ebuNbr - Store number
@@ -72,15 +69,6 @@ public class AcknowledgeController {
 			//update alert status to 0
 			alert.setAlertStatus(0);
 			acknowledgeService.updateAlert(alert);
-						
-			//check if timezone is an input, otherwise pull from ebu_info table in DB
-			String s_timeZone = null;
-			if (timeZone.isPresent()) {
-				s_timeZone = timeZone.get();
-			}
-			else {	
-				s_timeZone = ebuInfoService.getInfo(countryCode, ebuNbr).getTimezone();
-			}
 			
 			//get alert history id from the URL & latest alert, and also validate inputs
 			AlertHistoryId alertHistoryId = new AlertHistoryId();
@@ -90,14 +78,9 @@ public class AcknowledgeController {
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			}
 			
-			//insert alert history into "alert_history" table
-			AlertHistory alertHistory = new AlertHistory();
-			alertHistory.setAlertHistoryId(alertHistoryId);
-			alertHistory.setAlertStartLtz(alert.getLastAlertLtz());
-			alertHistory.setAlertEndGmt(ZonedDateTime.now(ZoneId.of("GMT")).toLocalDateTime());
-			alertHistory.setAlertEndLtz(ZonedDateTime.now(ZoneId.of(s_timeZone)).toLocalDateTime());
-			historyService.createAlertHistory(alertHistory);
-
+			//configure and insert alert history into "alert_history" table
+			historyService.configureAndInsertAlertHistory(alert, alertHistoryId, timeZone, countryCode, ebuNbr);
+			
 			//return "OK" http status code
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
