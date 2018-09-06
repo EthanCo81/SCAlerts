@@ -33,4 +33,15 @@ public interface AlertService {
 	 * @param alert - The Alert to be updated
 	 */
 	public void updateAlert(Alert alert);
+	
+	/**
+	 * Changes the Alert flag from 0 to 1, and timestamps the alert
+	 * 
+	 * @param oldAlert - The Alert to be changed
+	 * @param s_timeZone - The time zone sent from the cache of the web service
+	 * @param countryCode - The 2 letter code for the country e.g. "US"
+	 * @param ebuNbr - The store location's number
+	 * @return - the modified Alert
+	 */
+	public Alert setNewAlert(Alert oldAlert, String s_timeZone, String countryCode, int ebuNbr);
 }
