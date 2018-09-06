@@ -1,7 +1,11 @@
-
+alertCheckInterval = 10000;
 countryCode = null;
 ebuNbr = null;
 historyTableDisplay = false;
+alertDisplay = false;
+noNewOrderHTML = '<div id="no-orders">No new orders</div>';
+errorText = 'ERROR OCCURED. CONTACT ADMINISTRATOR';
+invalidClubNumberMessage = 'Invalid Club Number';
 
 
 function getAlerts() {
@@ -17,7 +21,10 @@ function getAlerts() {
                     backdrop: 'static',
                     keyboard: false
                 });
-                clearInterval(interval);
+                alertDisplay = true;
+            } else if (alert.alertStatus === 0 && alertDisplay === true) {
+                $("#alert").modal('hide');
+                alertDisplay = false;
             }
         }
     }
@@ -25,10 +32,20 @@ function getAlerts() {
 
 function sendAcknowledge() {
     var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = dismiss;
     xhttp.open("POST", "acknowledge/" + countryCode + "/" + ebuNbr, true);
     xhttp.send();
+    function dismiss() {
+        if (xhttp.status === 200 && xhttp.readyState === 4) {
+            $('#alert').modal('hide');
+            document.getElementById("ordertable").innerHTML = noNewOrderHTML;
+            historyTableDisplay = false;
+            alertDisplay = false;
+        } else if (xhttp.readyState === 4 && xhttp.status !== 200) {
+            $(".alert-text").innerText = errorText;
+        }
+    }
 
-    interval = setInterval(getAlerts, 10000);
 }
 
 function sendEbuInfo() {
@@ -44,7 +61,7 @@ function sendEbuInfo() {
     function isStore() {
         if (xhttp.readyState === 4) {
         	if(xhttp.status === 404) {
-                document.getElementById("null-div").innerHTML = "Invalid store code";
+                document.getElementById("null-div").innerHTML = invalidClubNumberMessage;
             } else if (xhttp.status === 200){
             	ebu = JSON.parse(xhttp.responseText);
                 document.getElementById("store-info").innerText =
@@ -52,7 +69,8 @@ function sendEbuInfo() {
                      Store #${ebuNbr}	`;
                 $("#ebu-input").modal('hide');
                 getAlerts();
-                interval = setInterval(getAlerts, 10000);
+                interval = setInterval(getAlerts, alertCheckInterval);
+                document.getElementById("null-div").innerHTML = "";
             }
         }
         
@@ -65,12 +83,11 @@ function checkTime() {
 
 function viewHistory() {
     if (historyTableDisplay === true) {
-        document.getElementById("ordertable").innerHTML = `<div id="no-orders">No new orders</div>`;
+        document.getElementById("ordertable").innerHTML = noNewOrderHTML;
         historyTableDisplay = false;
         return;
     }
     historyTableDisplay = true;
-    console.log("opening history req");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = returnedHistory;
     xhttp.open("GET", "/alert/history/" + countryCode + "/" + ebuNbr, true);
@@ -80,7 +97,6 @@ function viewHistory() {
         console.log(xhttp.readyState + " " + xhttp.status);
         if (xhttp.readyState === 4 && xhttp.status === 200) {
             var historyTable = JSON.parse(xhttp.responseText);
-            console.log(historyTable);
             document.getElementById("ordertable").innerHTML = `<table border="1"><tbody id="history-table"><tr><th>Alert Code</th><th>Alert Start Time</th><th>Alert Acknowledge Time</th></tr></tbody></table>`;
             for (a in historyTable) {
                 document.getElementById("history-table").innerHTML +=
@@ -99,8 +115,7 @@ function viewHistory() {
 
 function createNewAlert() {
     var xhttp = new XMLHttpRequest();
-    console.log("alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/?alertType=" + document.getElementById("alertTypeNbr").value);
-    xhttp.open("POST", "alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/?alertType=" + document.getElementById("alertTypeNbr").value, true);
+    xhttp.open("POST", "alert/" + document.getElementById("countryCodeNewAlert").value + "/" + document.getElementById("ebuNbrNewAlert").value + "/timeZone=" + Intl.DateTimeFormat().resolvedOptions().timeZone + "&?alertType=" + document.getElementById("alertTypeNbr").value, true);
     xhttp.send();
 }
 
