@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.beans.Alert;
+import com.example.beans.AlertType;
 import com.example.beans.EBUInfo;
 import com.example.beans.EBUid;
 import com.example.demo.data.AlertRepository;
@@ -59,6 +60,15 @@ public class AlertServiceImpl  implements AlertService{
 		alert.setLastAlertLtz(localTime);
 		
 		return alert;
+	}
+	
+	public Alert setOldAlert(String countryCode, int ebuNbr, int alertType) {
+		Alert oldAlert = new Alert();
+		oldAlert.setAlertStatus(0);
+		oldAlert.setAlertType(new AlertType(alertType));
+		EBUid ebuID = new EBUid(countryCode, ebuNbr);
+		oldAlert.setEbuId(ebuID);
+		return oldAlert;
 	}
 	
 	public ZoneId validateTimeZone (String timeZone, String countryCode, int ebuNbr) {

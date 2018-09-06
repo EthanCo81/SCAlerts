@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.beans.Alert;
 import com.example.beans.AlertHistory;
-import com.example.beans.AlertType;
-import com.example.beans.EBUid;
 import com.example.demo.services.AlertService;
 import com.example.demo.services.EBUInfoService;
 import com.example.demo.services.HistoryService;
@@ -99,11 +97,7 @@ public class AlertController {
 		try{
 			oldAlert = alertService.getAlert(countryCode, ebuNbr);
 		} catch (NoSuchElementException e) {
-			oldAlert = new Alert();
-			oldAlert.setAlertStatus(0);
-			oldAlert.setAlertType(new AlertType(alertType));
-			EBUid ebuID = new EBUid(countryCode, ebuNbr);
-			oldAlert.setEbuId(ebuID);
+			oldAlert = alertService.setOldAlert(countryCode, ebuNbr, alertType);
 		}
 		//Check that the alert flag is not already raised AND that it's a new Express Order alert
 		if (oldAlert.getAlertStatus() == 0 && alertType == 15) {
