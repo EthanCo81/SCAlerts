@@ -59,7 +59,7 @@ public class HistoryServiceImpl implements HistoryService{
 		hd.deleteById(alertHistoryId);
 	}
 	
-	//get alertHistoryId method for getting alertHistoryId from URL
+	//get alertHistoryId method for getting alertHistoryId from the URL and the latest alert
 	public AlertHistoryId getAlertHistoryId(String countryCode, int ebuNbr, Alert alert) {
 		AlertHistoryId alertHistoryId = new AlertHistoryId();
 		alertHistoryId.setCountryCode(countryCode);

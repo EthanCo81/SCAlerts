@@ -56,14 +56,16 @@ public interface AcknowledgeService {
 	@Transactional
 	public void updateAlert(Alert alert);
 
+	
 	/**
 	 * Deletes an alert from the database
 	 * 
-	 * @param ebuId - the composite ID of the alert, consisting of countryCode and ebuNbr
+	 * @param ebuId - the composite ID of the alert
 	 */
 	@Transactional
 	public void deleteAlert(EBUid ebuId);
 
+	
 	/**
 	 * Gets an EBUid from a given countryCode and ebuNbr
 	 * 

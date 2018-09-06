@@ -5,20 +5,31 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * Define AlertType POJO
+ * 
+ * @author Thomas Santillan
+ *
+ */
+@ApiModel (value="AlertType", description="An object representing a type of Alert")
 @Entity
 @Table(name="alert_type")
 public class AlertType {
 	
+	@ApiModelProperty(value="ID consisting of the code of some type of alert")
 	@Id
 	@Column(name="alert_type_cd")
 	private int alertTypeCode;
 	
+	@ApiModelProperty(value="The name of some type of alert")
 	@Column(name="alert_type_name")
 	private String alertTypeName;
 
 	public AlertType() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public AlertType(int alertTypeCode) {

@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModel;
 public interface HistoryService {
 
 	/**
-	 * Creates a new AlertHistory
+	 * Creates a new AlertHistory in the DB
 	 * 
 	 * @param alertHistory - The AlertHistory to be created
 	 * @return AlertHistory - The AlertHistory that was created
@@ -52,7 +52,7 @@ public interface HistoryService {
 	public void updateAlertHistory(AlertHistory alertHistory);
 
 	/**
-	 * Deletes an AlertHistory from database
+	 * Deletes an AlertHistory from the database
 	 * 
 	 * @param alertHistoryId - The ID of the AlertHistory to be deleted
 	 */
