@@ -31,8 +31,7 @@ import io.swagger.annotations.ApiResponses;
 @ApiModel(value = "AlertController", description = "A rest controller to handle HTTP Requests made to /alert/{countryCode}/{ebuNbr}")
 public class AlertController {
 	@Autowired
-	private AlertService alertService;
-	
+	private AlertService alertService;	
 
 	@Autowired
 	private HistoryService historyService;
@@ -42,6 +41,7 @@ public class AlertController {
 	
 	/**
 	 * Retrieves a 1-hour Alert
+	 * 
 	 * @param ebuNbr - Store number
 	 * @param countryCode - The country code e.g. "US"
 	 * @return alert and HTTP status code
@@ -49,7 +49,11 @@ public class AlertController {
 	@ApiOperation(value = "Retrieves a 1-hour Alert", response = Alert.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert retrieved") } )	
 	@RequestMapping(value = "/alert/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
-	public ResponseEntity<Alert> getAlert(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
+	public ResponseEntity<Alert> getAlert(
+		
+			@PathVariable("countryCode") String countryCode,
+			@PathVariable("ebuNbr") int ebuNbr
+	){
 		try {
 			Alert a = alertService.getAlert(countryCode, ebuNbr);
 			return new ResponseEntity<> (a, HttpStatus.OK);
@@ -68,7 +72,11 @@ public class AlertController {
 	@ApiOperation(value = "Retrieves the AlertHistory", response = AlertHistory.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "AlertHistory retrieved") } )	
 	@RequestMapping(value = "/alert/history/{countryCode}/{ebuNbr}", method = RequestMethod.GET)
-	public ResponseEntity<List<AlertHistory>> getAlertHistory(@PathVariable("countryCode") String countryCode, @PathVariable("ebuNbr") int ebuNbr){
+	public ResponseEntity<List<AlertHistory>> getAlertHistory(
+		
+			@PathVariable("countryCode") String countryCode,
+			@PathVariable("ebuNbr") int ebuNbr
+	){
 		List<AlertHistory> history = historyService.getAllHistories(countryCode, ebuNbr);
 		return new ResponseEntity<> (history, HttpStatus.OK);
 	}
@@ -85,12 +93,14 @@ public class AlertController {
 	 */
 	@ApiOperation(value = "Adds a new 1-hour Alert", response = Alert.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Created alert returned") } )
-	@PostMapping(value= {"alert/{countryCode}/{ebuNbr}"}
-			, produces = MediaType.APPLICATION_JSON_VALUE
-			)
-	public ResponseEntity<Alert> createAlert(@PathVariable("ebuNbr")int ebuNbr,
-		@PathVariable("countryCode") String countryCode, @RequestParam("timeZone") Optional<String> timeZone
-		, @RequestParam("alertType") int alertType){
+	@PostMapping(value= {"alert/{countryCode}/{ebuNbr}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Alert> createAlert(
+		
+			@PathVariable("ebuNbr")int ebuNbr,
+			@PathVariable("countryCode") String countryCode,
+			@RequestParam("timeZone") Optional<String> timeZone,
+			@RequestParam("alertType") int alertType
+	){
 		
 		//Lookup the Alert by countryCode and ebuNbr. If no Alert exists for that store, create a new Alert.
 		Alert oldAlert = null;
@@ -122,11 +132,14 @@ public class AlertController {
 	 */
 	@ApiOperation(value = "Updates a new 1-hour Alert", response = Alert.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Alert updated and returned") } )
-	@PutMapping(value= {"alert/{countryCode}/{ebuNbr}"} 
-			, produces = MediaType.APPLICATION_JSON_VALUE
-			)
-	public ResponseEntity<Alert> updateAlert(@PathVariable("ebuNbr")int ebuNbr,	@PathVariable("countryCode") String countryCode
-			, @RequestParam("timeZone") Optional<String> timeZone, @RequestParam("alertType") int alertType){
+	@PutMapping(value= {"alert/{countryCode}/{ebuNbr}"}, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Alert> updateAlert(
+		
+			@PathVariable("ebuNbr")int ebuNbr,
+			@PathVariable("countryCode") String countryCode,
+			@RequestParam("timeZone") Optional<String> timeZone,
+			@RequestParam("alertType") int alertType
+	){
 		
 		Alert oldAlert;
 		try {
