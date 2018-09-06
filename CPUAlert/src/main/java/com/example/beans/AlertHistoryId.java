@@ -1,7 +1,7 @@
 package com.example.beans;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Composite Id for AlertHistory
  * 
- * @author Larry Kang
+ * @author Larry Kang | Thomas Santillan | SEP 6, 2018
  *
  */
 @Embeddable
@@ -35,20 +35,20 @@ public class AlertHistoryId implements Serializable{
 	@ApiModelProperty(value ="Type of alert (eg 15 (ExpressOrder))")
 	private AlertType alertType;
 	
-	@Column(name = "alert_start_ts_gmt")
-	@ApiModelProperty(value ="Timestamp in GMT time when the alert was received")
-	private LocalDateTime alertStartGmt;
+	@Column(name = "alert_start_ts")
+	@ApiModelProperty(value ="Timestamp and offset when the alert was received")
+	private OffsetDateTime alertStartTime;
 
 	public AlertHistoryId() {
 		super();
 	}
 
-	public AlertHistoryId(String countryCode, int ebuNbr, AlertType alertType, LocalDateTime alertStartGmt) {
+	public AlertHistoryId(String countryCode, int ebuNbr, AlertType alertType, OffsetDateTime alertStartTime) {
 		super();
 		this.countryCode = countryCode;
 		this.ebuNbr = ebuNbr;
 		this.alertType = alertType;
-		this.alertStartGmt = alertStartGmt;
+		this.alertStartTime = alertStartTime;
 	}
 
 	public String getCountryCode() {
@@ -75,19 +75,19 @@ public class AlertHistoryId implements Serializable{
 		this.alertType = alertType;
 	}
 
-	public LocalDateTime getAlertStartGmt() {
-		return alertStartGmt;
+	public OffsetDateTime getAlertStartTime() {
+		return alertStartTime;
 	}
 
-	public void setAlertStartGmt(LocalDateTime alertStartGmt) {
-		this.alertStartGmt = alertStartGmt;
+	public void setAlertStartTime(OffsetDateTime alertStartTime) {
+		this.alertStartTime = alertStartTime;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((alertStartGmt == null) ? 0 : alertStartGmt.hashCode());
+		result = prime * result + ((alertStartTime == null) ? 0 : alertStartTime.hashCode());
 		result = prime * result + ((alertType == null) ? 0 : alertType.hashCode());
 		result = prime * result + ((countryCode == null) ? 0 : countryCode.hashCode());
 		result = prime * result + ebuNbr;
@@ -103,10 +103,10 @@ public class AlertHistoryId implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		AlertHistoryId other = (AlertHistoryId) obj;
-		if (alertStartGmt == null) {
-			if (other.alertStartGmt != null)
+		if (alertStartTime == null) {
+			if (other.alertStartTime != null)
 				return false;
-		} else if (!alertStartGmt.equals(other.alertStartGmt))
+		} else if (!alertStartTime.equals(other.alertStartTime))
 			return false;
 		if (alertType == null) {
 			if (other.alertType != null)
@@ -126,6 +126,7 @@ public class AlertHistoryId implements Serializable{
 	@Override
 	public String toString() {
 		return "AlertHistoryId [countryCode=" + countryCode + ", ebuNbr=" + ebuNbr + ", alertType=" + alertType
-				+ ", alertStartGmt=" + alertStartGmt + "]";
+				+ ", alertStartTime=" + alertStartTime + "]";
 	}
+
 }
