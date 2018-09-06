@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,11 @@ public class EBUInfoServiceImpl implements EBUInfoService{
 	public EBUInfo getInfo(String countryCode, int ebuNbr) {
 		EBUid id = new EBUid(countryCode, ebuNbr);
 		return ebuRepo.findById(id).get();
+	}
+
+	@Override
+	public List<EBUInfo> getAllEBUInfo() {
+		return ebuRepo.findAll();
 	}
 
 }

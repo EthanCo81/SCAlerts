@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import com.example.beans.EBUInfo;
 
 import io.swagger.annotations.ApiModel;
@@ -14,11 +16,15 @@ import io.swagger.annotations.ApiModel;
 public interface EBUInfoService {
 	
 	/**
-	 * 
 	 * @param countryCode - The country code string e.g. "US"
 	 * @param ebuNbr - The store location's number
 	 * @return EBUInfo - the EBUInfo by countryCode and ebuNbr
 	 */
 	public EBUInfo getInfo(String countryCode,int ebuNbr);
+	
+	/**
+	 * @return List<EBUInfo> - A list of all EBUInfo in the database
+	 */
+	public List<EBUInfo> getAllEBUInfo();
 
 }

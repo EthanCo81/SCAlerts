@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.zone.ZoneRulesException;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -30,7 +31,7 @@ public class AlertServiceImpl  implements AlertService{
 	private AlertRepository alertRepo;
 	
 	@Autowired
-	EBUInfoService ebuInfoService;
+	private EBUInfoService ebuInfoService;
 	
 	@Override
 	public Alert getAlert(String countryCode, int ebuNbr) {
@@ -38,6 +39,11 @@ public class AlertServiceImpl  implements AlertService{
 		return alertRepo.findById(id).get();
 	}
 	
+	@Override
+	public List<Alert> getAllAlerts() {
+		return alertRepo.findAll();
+	}
+		
 	@Transactional
 	@Override
 	public Alert createAlert(Alert alert) {
@@ -96,4 +102,6 @@ public class AlertServiceImpl  implements AlertService{
 		String storeTimeZone = ebuInfo.getTimezone();
 		return storeTimeZone;
 	}
+
+
 }

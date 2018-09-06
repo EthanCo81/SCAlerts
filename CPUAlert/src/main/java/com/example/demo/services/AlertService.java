@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import java.util.List;
+
 import com.example.beans.Alert;
 
 import io.swagger.annotations.ApiModel;
@@ -20,6 +22,12 @@ public interface AlertService {
 	 * @return Alert - The retrieved Alert
 	 */
 	public Alert getAlert(String countryCode, int ebuNbr);
+	
+	/**
+	 * Gets all alerts in database
+	 * @return List<Alert> - The list of all Alert
+	 */
+	public List<Alert> getAllAlerts();
 	
 	/**
 	 * 
