@@ -78,7 +78,7 @@ public class AcknowledgeController {
 				return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 			}
 			
-			//insert alert history into "alert_history" table
+			//configure and insert alert history into "alert_history" table
 			historyService.configureAndInsertAlertHistory(alert, alertHistoryId, timeZone, countryCode, ebuNbr);
 			
 			//return "OK" http status code
