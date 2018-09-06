@@ -6,10 +6,14 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.zone.ZoneRulesException;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.beans.Alert;
@@ -46,14 +50,46 @@ public class AlertServiceImpl  implements AlertService{
 		
 	@Transactional
 	@Override
-	public Alert createAlert(Alert alert) {
-		return alertRepo.saveAndFlush(alert);
+	public Alert createAlert(Alert alert, String countryCode, int ebuNbr, Optional<String> timeZone, int alertType) {
+		try {
+			alert = getAlert(countryCode, ebuNbr);
+		} catch (NoSuchElementException e) {
+			alert = setOldAlert(countryCode, ebuNbr, alertType);
+		}
+		
+		//Check that the alert flag is not already raised AND that it's a new Express Order alert
+		if (alert.getAlertStatus() == 0 && alertType == 15) {
+			String s_timeZone = null;
+			if (timeZone.isPresent()) {
+				s_timeZone = timeZone.get();
+			}
+			alert = setNewAlert(alert, s_timeZone, countryCode, ebuNbr);
+			return alertRepo.saveAndFlush(alert);
+		} else {
+			return alert;
+		}
 	}
 	
 	@Transactional
 	@Override
-	public void updateAlert(Alert alert) {
-		alertRepo.save(alert);
+	public Alert updateAlert(Alert alert, String countryCode, int ebuNbr, Optional<String> timeZone, int alertType) {
+		try {
+			alert = getAlert(countryCode, ebuNbr);
+		} catch (NoSuchElementException e) {
+			return null;
+		}
+		
+		//Check that the alert flag is not already raised AND that it's a new Express Order alert
+		if (alert.getAlertStatus() == 0 && alertType == 15) {
+			String s_timeZone = null;
+			if (timeZone.isPresent()) {
+				s_timeZone = timeZone.get();
+			}
+			alert = setNewAlert(alert, s_timeZone, countryCode, ebuNbr);
+			return alertRepo.save(alert);
+		} else {
+			return alert;
+		}
 	}
 	
 	public Alert setNewAlert(Alert alert, String timeZone, String countryCode, int ebuNbr) {
